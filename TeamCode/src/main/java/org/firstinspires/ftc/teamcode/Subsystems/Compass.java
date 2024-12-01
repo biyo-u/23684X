@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriverRR;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.IMU;
 
@@ -10,7 +9,7 @@ import java.util.Locale;
 
 public class Compass {
     private final IMU imu;
-    private final GoBildaPinpointDriverRR odocomp;
+    private final GoBildaPinpointDriver odocomp;
 
     private String model;
 
@@ -26,6 +25,7 @@ public class Compass {
     public double getHeading() {
         if (odocomp != null) {
             model = "Pinpoint IMU";
+            odocomp.update();
             return odocomp.getHeading();
         } else {
             model = "REV Hub IMU";
@@ -33,24 +33,31 @@ public class Compass {
         }
     }
     public void resetYaw() {
-
        if (imu != null) {
            imu.resetYaw();
        } else {
+           odocomp.update();
            odocomp.resetPosAndIMU();
        }
     }
 
-    public Compass(GoBildaPinpointDriverRR goBildaPinpointDriverRR) {
-        this.odocomp = goBildaPinpointDriverRR;
+    public Compass(GoBildaPinpointDriver goBildaPinpointDriver) {
+        this.odocomp = goBildaPinpointDriver;
         imu = null;
     }
 
     public String getTelemetry() {
-        return String.format(Locale.getDefault(), """
+        if (imu != null) {
+            return String.format(Locale.getDefault(), """
+                    Robot Yaw: %f
+                    Robot Pitch: %f
+                    Robot Roll: %f
+                    Model Used: %s""", imu.getRobotYawPitchRollAngles().getYaw(), imu.getRobotYawPitchRollAngles().getPitch(), imu.getRobotYawPitchRollAngles().getRoll(), model);
+        } else {
+            odocomp.update();
+            return String.format(Locale.getDefault(), """
                 Robot Yaw: %f
-                Robot Pitch: %f
-                Robot Roll: %f
-                Model Used: %s""", imu.getRobotYawPitchRollAngles().getYaw(), imu.getRobotYawPitchRollAngles().getPitch(), imu.getRobotYawPitchRollAngles().getRoll(), model);
+                Model Used: %s""", odocomp.getHeading(), model);
+        }
     }
 }

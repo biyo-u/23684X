@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Compass;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
+import org.firstinspires.ftc.teamcode.Subsystems.GoBildaPinpointDriver;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Lift;
 import org.firstinspires.ftc.teamcode.Subsystems.Odometry;
@@ -36,11 +37,11 @@ public class Robot {
         DcMotor rearRight = hardwareMap.get(DcMotor.class, "rearRight");
 
         IMU imu = hardwareMap.get(IMU.class, "imu");
-//        GoBildaPinpoint odometryComputer = hardwareMap.get(GoBildaPinpoint.class, "odometry");
+        GoBildaPinpointDriver odometryComputer = hardwareMap.get(GoBildaPinpointDriver.class, "odometry");
 
         // Initialize Public Subsystems
-        compass = new Compass(imu);
-//        compass = new Compass(odometryComputer);
+//        compass = new Compass(imu);
+        compass = new Compass(odometryComputer);
         intake = new Intake(clawServo, wristServo);
         lift = new Lift(liftMotorLeft, liftMotorRight, shoulderMotor, liftServoTiltRight, liftServoTiltLeft, rightHangServo, leftHangServo);
         drive = new Drive(frontLeft, frontRight, rearLeft, rearRight, compass);
