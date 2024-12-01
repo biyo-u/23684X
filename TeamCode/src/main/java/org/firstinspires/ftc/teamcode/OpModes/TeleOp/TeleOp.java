@@ -64,6 +64,8 @@ public class TeleOp extends OpMode {
             robot.intake.clawClose();
         }
 
+        robot.odometry.update();
+
         // Telemetry  TODO: if anything else needs telemetry, add it
         telemetry.addLine(robot.lift.getTelemetry());
         telemetry.addLine(robot.lift.getJointLiftPosition());

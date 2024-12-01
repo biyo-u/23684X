@@ -10,94 +10,67 @@ public class DrivetrainMovements {
     Robot robot;
 
     double modifier = 0.6;
-    double forward = 1 * modifier;
-    double backward = -1 * modifier;
     double rest = 0;
+    /**
+     * Strafe Left: FL = -1, FR = 1, RL = 1, RR = -1
+     * <p>
+     * Strafe Right: FL = 1, FR = -1, RL = -1, RR = 1
+     * <p>
+     * Angle Strafe Forward Right: FL = 1, FR = 0, RL = 0, RR = 1
+     * <p>
+     * Angle Strafe Forward Left: FL = 0, FR = 1, RL = 1, RR = 0
+     * <p>
+     * Angle Strafe Backward Right: FL = -1, FR = 0, RL = 0, RR = -1
+     * <p>
+     * Angle Strafe Backward Left: FL = 0, FR = -1, RL = -1, RR = 0
+     * <p>
+     * Rotate Clockwise: FL = 1, FR = -1, RL = 1, RR = -1
+     * <p>
+     * Rotate Counter-clockwise: FL = -1, FR = 1, RL = -1, RR = 1
+     * <p>
+     * Stop: FL = 0, FR = 0, RL = 0, RR = 0
+     */
+    public enum MotorDirection {
+        FORWARD (1, 1, 1, 1),
+        BACKWARD (-1,-1,-1,-1),
+        STRAFE_LEFT (-1,1,1,-1),
+        STRAFE_RIGHT (1,-1,-1,1),
+        ANGLE_STRAFE_FORWARD_RIGHT (1, 0, 0, 1),
+        ANGLE_STRAFE_FORWARD_LEFT (0,1,1,0),
+        ANGLE_STRAFE_BACKWARD_RIGHT (-1,0,0,-1),
+        ANGLE_STRAFE_BACKWARD_LEFT (0,-1,-1,0),
+        ROTATE_CLOCKWISE (1,-1,1,-1),
+        ROTATE_COUNTERCLOCKWISE (-1,1,-1,1),
+        STOP (0,0,0,0);
+
+        private final double FL;
+        private final double FR;
+        private final double RL;
+        private final double RR;
+
+        MotorDirection(double FL, double FR, double RL, double RR) {
+            this.FL = FL;
+            this.FR = FR;
+            this.RL = RL;
+            this.RR = RR;
+        }
+    }
 
     public DrivetrainMovements(Robot robot){
         this.robot = robot;
     }
-
-    // Drivetrain moves forward
-    public void YForward(){
-        robot.drive.getFrontLeft().setPower(forward);
-        robot.drive.getFrontRight().setPower(forward);
-        robot.drive.getRearLeft().setPower(forward);
-        robot.drive.getRearRight().setPower(forward);
+    /**
+     * Eagleflow is a method that determines power of the motors based on direction. It will power the motors in order to achieve a desired movement, such as strafing, rotation, driving, and diagonal movement.
+     *
+     * @param direction The power applied to the motors
+     */
+    public void move(MotorDirection direction){
+        robot.drive.getFrontLeft().setPower(direction.FL * modifier);
+        robot.drive.getFrontRight().setPower(direction.FR * modifier);
+        robot.drive.getRearLeft().setPower(direction.RL * modifier);
+        robot.drive.getRearRight().setPower(direction.RR * modifier);
     }
-
-    // Drivetrain moves backward
-    public void YBackward(){
-        robot.drive.getFrontLeft().setPower(backward);
-        robot.drive.getFrontRight().setPower(backward);
-        robot.drive.getRearLeft().setPower(backward);
-        robot.drive.getRearRight().setPower(backward);
-    }
-
-    // Drivetrain moves right
-    public void XRight(){
-        robot.drive.getFrontLeft().setPower(forward);
-        robot.drive.getFrontRight().setPower(backward);
-        robot.drive.getRearLeft().setPower(backward);
-        robot.drive.getRearRight().setPower(forward);
-    }
-
-    // Drivetrain moves left
-    public void XLeft(){
-        robot.drive.getFrontLeft().setPower(backward);
-        robot.drive.getFrontRight().setPower(forward);
-        robot.drive.getRearLeft().setPower(forward);
-        robot.drive.getRearRight().setPower(backward);
-    }
-
-    // Drivetrain moves at a 45 degree angle forward and to the right
-    public void XYForwardRight(){
-        robot.drive.getFrontLeft().setPower(forward);
-        robot.drive.getFrontRight().setPower(rest);
-        robot.drive.getRearLeft().setPower(rest);
-        robot.drive.getRearRight().setPower(forward);
-    }
-
-    // Drivetrain moves at a 45 degree angle forward and to the left
-    public void XYForwardLeft(){
-        robot.drive.getFrontLeft().setPower(rest);
-        robot.drive.getFrontRight().setPower(forward);
-        robot.drive.getRearLeft().setPower(forward);
-        robot.drive.getRearRight().setPower(rest);
-    }
-
-    // Drivetrain moves at a 45 degree angle backward and to the right
-    public void XYBackwardRight(){
-        robot.drive.getFrontLeft().setPower(backward);
-        robot.drive.getFrontRight().setPower(rest);
-        robot.drive.getRearLeft().setPower(rest);
-        robot.drive.getRearRight().setPower(backward);
-    }
-
-    // Drivetrain moves at a 45 degree angle backward and to the left
-    public void XYBackwardLeft(){
-        robot.drive.getFrontLeft().setPower(rest);
-        robot.drive.getFrontRight().setPower(backward);
-        robot.drive.getRearLeft().setPower(backward);
-        robot.drive.getRearRight().setPower(rest);
-    }
-
-    // Drivetrain rotates to the right
-    public void thetaRight() {
-        robot.drive.getFrontLeft().setPower(forward);
-        robot.drive.getFrontRight().setPower(backward);
-        robot.drive.getRearLeft().setPower(forward);
-        robot.drive.getRearRight().setPower(backward);
-    }
-
-    //Drivetrain rotates to the left
-    public void thetaLeft(){
-        robot.drive.getFrontLeft().setPower(backward);
-        robot.drive.getFrontRight().setPower(forward);
-        robot.drive.getRearLeft().setPower(backward);
-        robot.drive.getRearRight().setPower(forward);
-    }
-
+    // Drivetrain stops
     public void stop(){
         robot.drive.getFrontLeft().setPower(rest);
         robot.drive.getFrontRight().setPower(rest);

@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Roadrunner.PinpointDrive;
 
+@Disabled
 @Autonomous
 public class Acme extends LinearOpMode {
     @Override

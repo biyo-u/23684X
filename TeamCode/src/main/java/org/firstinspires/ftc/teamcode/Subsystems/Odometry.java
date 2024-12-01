@@ -12,7 +12,7 @@ import java.util.Locale;
 public class Odometry {
     private final GoBildaPinpointDriverRR odometry;
     private final Compass compass;
-    // isInitialized starts out false and turns true after the first `update()` or `updateWithWeight()`
+    // isInitialized starts out false and turns true after the first `setPosition()` or `updateWithWeight()`
     private boolean isInitialized = false;
 
 
@@ -42,7 +42,7 @@ public class Odometry {
      * @param x The x-coordinate of the robot's position in inches.
      * @param y The y-coordinate of the robot's position in inches.
      */
-    public void update(double x, double y) {
+    public void setPosition(double x, double y) {
         odometry.setPosition(new Pose2D(DistanceUnit.INCH, x, y, AngleUnit.DEGREES, compass.getHeading()));
         if (!isInitialized) {
             isInitialized = true;
@@ -60,11 +60,15 @@ public class Odometry {
      * @param y       The y-coordinate of the robot's position in inches.
      * @param heading The heading of the robot in degrees.
      */
-    public void update(double x, double y, double heading) {
+    public void setPosition(double x, double y, double heading) {
         odometry.setPosition(new Pose2D(DistanceUnit.INCH, x, y, AngleUnit.DEGREES, heading));
         if (!isInitialized) {
             isInitialized = true;
         }
+    }
+
+    public void update() {
+        odometry.update();
     }
 
     /**

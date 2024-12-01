@@ -48,8 +48,5 @@ public class Robot {
         lift = new Lift(liftMotorLeft, liftMotorRight, shoulderMotor, liftServoTiltRight, liftServoTiltLeft, rightHangServo, leftHangServo);
         drive = new Drive(frontLeft, frontRight, rearLeft, rearRight, this);
         odometry = new Odometry(odometryComputer, compass);
-
-        // Declare Hardware is initialised
-        telemetry.addData("Hardware Status", "Initialized");
     }
 }

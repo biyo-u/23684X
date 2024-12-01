@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.OpModes.Auto;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Constants;
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.Roadrunner.Actions.LiftActions;
 import org.firstinspires.ftc.teamcode.Roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.Robot;
 
+@Disabled
 @Autonomous(name = "Auto", group = Constants.GroupNames.Autonomous, preselectTeleOp = "TeleOp")
 public class Auto extends LinearOpMode {
     @Override
