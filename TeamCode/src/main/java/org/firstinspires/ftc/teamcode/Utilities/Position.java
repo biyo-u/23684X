@@ -25,6 +25,31 @@ public class Position {
         return vector2D;
     }
 
+    public double getX() {
+        return vector2D.getX();
+    }
+
+    public double getY() {
+        return vector2D.getY();
+    }
+
+    public double getHeading() {
+        return rotation.getHeading();
+    }
+
+    // sET X, Y, AND HEADING
+    public void setX(double x) {
+        vector2D.setX(x);
+    }
+
+    public void setY(double y) {
+        vector2D.setY(y);
+    }
+
+    public void setHeading(double heading) {
+        rotation.setHeading(heading, AngleUnit.DEGREES);
+    }
+
     public void setVector2D(Vector2D vector2D) {
         this.vector2D = vector2D;
     }
