@@ -2,25 +2,22 @@ package org.firstinspires.ftc.teamcode.EagleMatrix;
 
 import org.firstinspires.ftc.teamcode.Robot;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 
 /**
  * Wingman is where you build the movements into a sequence.
  */
 public class Wingman {
     Robot robot;
-    DrivetrainMovements drivetrainMovements;
+    DriveMovements driveMovements;
     LiftMovements liftMovements;
 
     double forward = 1;
     double backward = -1;
     double rest = 0;
 
-    public Wingman(Robot robot, DrivetrainMovements drivetrainMovements, LiftMovements liftmovements){
+    public Wingman(Robot robot, DriveMovements driveMovements, LiftMovements liftmovements){
         this.robot = robot;
-        this.drivetrainMovements = drivetrainMovements;
+        this.driveMovements = driveMovements;
         this.liftMovements = liftmovements;
     }
 //

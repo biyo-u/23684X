@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.Robot;
  * DriveMovements is where you build the drivetrain movements based on motor direction.
  */
 
-public class DrivetrainMovements {
+public class DriveMovements {
     Robot robot;
 
     double modifier = 0.6;
@@ -56,7 +56,7 @@ public class DrivetrainMovements {
         }
     }
 
-    public DrivetrainMovements(Robot robot){
+    public DriveMovements(Robot robot){
         this.robot = robot;
     }
     /**
