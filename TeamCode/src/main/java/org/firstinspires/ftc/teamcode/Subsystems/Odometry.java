@@ -55,7 +55,6 @@ public class Odometry {
      * This method takes the x coordinate, y coordinate, and heading
      * as input and updates the odometry with the new position heading.
      * It also marks the odometry as initialized if it wasn't already.
-     *
      * @param x       The x-coordinate of the robot's position in inches.
      * @param y       The y-coordinate of the robot's position in inches.
      * @param heading The heading of the robot in degrees.
