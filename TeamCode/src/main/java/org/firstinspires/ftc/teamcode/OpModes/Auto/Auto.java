@@ -1,41 +1,45 @@
 package org.firstinspires.ftc.teamcode.OpModes.Auto;
 
-import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Constants;
-import org.firstinspires.ftc.teamcode.Roadrunner.Actions.LiftActions;
-import org.firstinspires.ftc.teamcode.Roadrunner.PinpointDrive;
+import org.firstinspires.ftc.teamcode.EagleMatrix.AutoDriver;
 import org.firstinspires.ftc.teamcode.Robot;
+import org.firstinspires.ftc.teamcode.Subsystems.GoBildaPinpointDriver;
+import org.firstinspires.ftc.teamcode.Utilities.Position;
 
-@Disabled
 @Autonomous(name = "Auto", group = Constants.GroupNames.Autonomous, preselectTeleOp = "TeleOp")
-public class Auto extends LinearOpMode {
+public class Auto extends OpMode {
+    private Robot robot;
+    private GoBildaPinpointDriver odometry;
+    private AutoDriver autoDriver;
+
     @Override
-    public void runOpMode() {
-        // TODO: IMPORTANT Add April Tags
-        // TODO: Clean up actions by grouping them in classes
-        // TODO: Add robot location
-        // Pose2d overridePose = new Pose2d(0, 0, 0);
-        Pose2d overridePose = Constants.RedObservationZone;
+    public void init() {
+        this.odometry = hardwareMap.get(GoBildaPinpointDriver.class, "odometry");
+        this.odometry.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
+        this.odometry.setOffsets(-6.44, 6.8745);
+        this.odometry.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+        this.odometry.resetPosAndIMU();
+        this.odometry.setPosition(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));
 
-        // Initialize April Tag Processor
+        this.autoDriver = new AutoDriver(robot, odometry);
+    }
 
-        waitForStart();
+    @Override
+    public void loop() {
+        while (autoDriver.moveTo(new Position(10, 0, 0, AngleUnit.DEGREES))) {
+            codeLoop();
+        }
 
-        // Loop for 3 seconds, averaging April Tag values
-        // Check where April Tag Location is closest to (check positive and negative x and y to figure out quadrant)
 
-        // PinpointDrive drive = new PinpointDrive(hardwareMap, aprilTagPose);
-        PinpointDrive drive = new PinpointDrive(hardwareMap, overridePose);
+        telemetry.addLine("Position: " + odometry.getPosition());
+    }
 
-        Actions.runBlocking(
-            drive.actionBuilder(overridePose)
-                    .lineToX(44)
-                    .build()
-        );
+    public void codeLoop(){
+
     }
 }

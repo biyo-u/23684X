@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.EagleMatrix;
 
-import org.firstinspires.ftc.teamcode.Subsystems.GoBildaPinpoint;
+import org.firstinspires.ftc.teamcode.Subsystems.GoBildaPinpointDriver;
 import org.firstinspires.ftc.teamcode.EagleMatrix.DriveMovements.MotorDirection;
 
 // this is where you will put odometry and eaglematrix together yayayayayayayayayayayayaayayayayayayayayay
 public class Chirp {
-	GoBildaPinpoint gpe;
+	GoBildaPinpointDriver gpe;
 	DriveMovements driveMovements;
 
 	public void HeadToY( double distanceY) {
