@@ -129,10 +129,6 @@ public class SensorMRColor extends LinearOpMode {
     }
 
     // Set the panel back to the default color
-    relativeLayout.post(new Runnable() {
-      public void run() {
-        relativeLayout.setBackgroundColor(Color.WHITE);
-      }
-    });
+    relativeLayout.post(() -> relativeLayout.setBackgroundColor(Color.WHITE));
   }
 }
