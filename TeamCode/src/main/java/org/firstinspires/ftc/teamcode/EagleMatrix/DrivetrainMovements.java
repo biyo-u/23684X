@@ -2,6 +2,10 @@ package org.firstinspires.ftc.teamcode.EagleMatrix;
 
 import org.firstinspires.ftc.teamcode.Robot;
 
+/**
+ * DriveMovements is where you build the drivetrain movements based on motor direction.
+ */
+
 public class DrivetrainMovements {
     Robot robot;
 

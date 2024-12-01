@@ -9,6 +9,10 @@ import org.firstinspires.ftc.teamcode.EagleMatrix.LiftMovements;
 import org.firstinspires.ftc.teamcode.EagleMatrix.Wingman;
 import org.firstinspires.ftc.teamcode.Robot;
 
+/**
+ * Griffindrive is where you run your wingman paths.
+ */
+
 @Autonomous(name = "Griffindrive", group = Constants.GroupNames.Autonomous, preselectTeleOp = "TeleOp")
 public class Griffindrive extends OpMode {
     public Wingman wingman;

@@ -5,6 +5,10 @@ import org.firstinspires.ftc.teamcode.Robot;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
+/**
+ * Wingman is where you build the movements into a sequence.
+ */
 public class Wingman {
     Robot robot;
     DrivetrainMovements drivetrainMovements;

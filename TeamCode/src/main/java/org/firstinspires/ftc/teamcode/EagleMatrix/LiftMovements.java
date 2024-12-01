@@ -2,6 +2,10 @@ package org.firstinspires.ftc.teamcode.EagleMatrix;
 
 import org.firstinspires.ftc.teamcode.Robot;
 
+/**
+ * LiftMovements is where you build the intake and lift movements based on motor direction.
+ */
+
 public class LiftMovements {
 
     Robot robot;
