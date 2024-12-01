@@ -34,12 +34,9 @@ public class Auto extends OpMode {
         while (autoDriver.moveTo(new Position(10, 0, 0, AngleUnit.DEGREES))) {
             codeLoop();
         }
-
-
-        telemetry.addLine("Position: " + odometry.getPosition());
     }
 
     public void codeLoop(){
-
+        telemetry.addLine("Position: " + odometry.getPosition());
     }
 }

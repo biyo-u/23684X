@@ -19,6 +19,8 @@ public class Constants {
     public static final double shoulderThreshold = 0.2;
     public static final Pose2d RedObservationZone = new Pose2d(16, 60, Math.toRadians(90));
 
+    public static final double doubleErrorThreshold = 0.00001;
+
     public static class GroupNames {
         public static final String TeleOp = "1.TeleOp";
         public static final String Autonomous = "1.Auto";

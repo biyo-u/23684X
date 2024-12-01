@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.EagleMatrix;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.Subsystems.GoBildaPinpointDriver;
 import org.firstinspires.ftc.teamcode.Utilities.Position;
@@ -35,47 +36,45 @@ public class AutoDriver {
 		odometry.update();
 		Pose2D currentPosition = odometry.getPosition();
 
-		if (!initialized) {
-			double x;
-			double y;
-			double heading;
+		double x = 0;
+		double y = 0;
+		double heading = 0;
 
-			if (position.getVector2D().getY() == currentPosition.getY(DistanceUnit.INCH)){
-				// No movement needed on y axis
-				y = 0;
-			} else if (position.getVector2D().getY() > currentPosition.getY(DistanceUnit.INCH)){
-				// Move forward
-				y = 1;
-			} else if (position.getVector2D().getY() < currentPosition.getY(DistanceUnit.INCH)){
-				// Move backward
-				y = -1;
-			}
-
-			if (position.getVector2D().getX() == currentPosition.getX(DistanceUnit.INCH)){
-				// No movement on the x axis needed
-				x = 0;
-			} else if (position.getVector2D().getX() > currentPosition.getX(DistanceUnit.INCH)){
-				// Move right
-				x = 1;
-			} else if (position.getVector2D().getX() < currentPosition.getX(DistanceUnit.INCH)){
-				// Move left
-				x = -1;
-			}
-
-			if (position.getHeading() == currentPosition.getHeading(AngleUnit.DEGREES)){
-				// No turning needed
-				heading = 0;
-			}
-			if (position.getHeading() > currentPosition.getHeading(AngleUnit.DEGREES)){
-				// No turning needed
-				heading = 1;
-			}
-			if (position.getHeading() < currentPosition.getHeading(AngleUnit.DEGREES)){
-				// No turning needed
-				heading = -1;
-			}
+		if (position.getVector2D().getY() == currentPosition.getY(DistanceUnit.INCH)){
+			// No movement needed on y axis
+			y = 0;
+		} else if (position.getVector2D().getY() > currentPosition.getY(DistanceUnit.INCH)){
+			// Move forward
+			y = 1;
+		} else if (position.getVector2D().getY() < currentPosition.getY(DistanceUnit.INCH)){
+			// Move backward
+			y = -1;
 		}
 
-		return true;
+		if (position.getVector2D().getX() == currentPosition.getX(DistanceUnit.INCH)){
+			// No movement on the x axis needed
+			x = 0;
+		} else if (position.getVector2D().getX() > currentPosition.getX(DistanceUnit.INCH)){
+			// Move right
+			x = 1;
+		} else if (position.getVector2D().getX() < currentPosition.getX(DistanceUnit.INCH)){
+			// Move left
+			x = -1;
+		}
+
+		if (position.getHeading() == currentPosition.getHeading(AngleUnit.DEGREES)){
+			// No turning needed
+			heading = 0;
+		}
+		if (position.getHeading() > currentPosition.getHeading(AngleUnit.DEGREES)){
+			// No turning needed
+			heading = 1;
+		}
+		if (position.getHeading() < currentPosition.getHeading(AngleUnit.DEGREES)){
+			// No turning needed
+			heading = -1;
+		}
+
+		return !(x > -Constants.doubleErrorThreshold) || !(x < Constants.doubleErrorThreshold) || !(y > -Constants.doubleErrorThreshold) || !(y < Constants.doubleErrorThreshold) || !(heading > -Constants.doubleErrorThreshold) || !(heading < Constants.doubleErrorThreshold);
 	}
 }
