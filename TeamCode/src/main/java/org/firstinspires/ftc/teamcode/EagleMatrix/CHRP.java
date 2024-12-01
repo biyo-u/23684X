@@ -60,11 +60,11 @@ public class CHRP {
 
               gpe.getHeading();
 
-              if (gpe.getPosX() > angle);{
+              if (gpe.getHeading() > angle);{
 
                   drivetrainMovements.thetaRight();
 
-              } if (gpe.getPosX() == angle);{
+              } if (gpe.getHeading() == angle);{
                   drivetrainMovements.stop();
               }
 
