@@ -1,0 +1,41 @@
+# EAGLEMATRIX PSEUDO-CODE FOR AUTONOMOUS EXCELLENCE
+
+(to view, enter project view, then go TeamCode>pseudocode)
+
+ACTION A: STEPS 1-8
+ACTION B: STEPS 9-16
+ACTION C: STEPS 17-20
+
+EagleMatrix Actions should be no more than EIGHT steps long.
+
+1. close claw on preloaded specimen
+2. raise lift
+3. raise shoulder
+4. forward to chambers
+5. lower lift to score
+6. open claw
+7. backward from chamber
+    7.1 lower lift fully
+    7.2 lower shoulder
+8. move to floor sample #1
+    8.1 strafe right
+    8.2 forward extra
+    8.3 strafe right
+9. push floor sample #1 to observation zone
+    9.1 move backward
+10. move forward
+11. turn around 180
+12. move forward and collect next specimen
+13. move backward
+14. turn around 180
+15. move to chambers
+    15.1 strafe left
+16. prep to score
+    16.1 raise shoulder
+    16.2 raise lift
+17. forward to chambers
+18. lower lift to score
+19. open claw
+20. backward from chamber
+    20.1 lower lift fully
+    20.2 lower shoulder
