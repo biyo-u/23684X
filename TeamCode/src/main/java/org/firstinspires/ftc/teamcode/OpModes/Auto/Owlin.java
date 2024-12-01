@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.EagleMatrix.DriveMovements;
-import org.firstinspires.ftc.teamcode.EagleMatrix.DriveMovements.MotorDirection;
+import org.firstinspires.ftc.teamcode.EagleMatrix.DriveMovements;
 import org.firstinspires.ftc.teamcode.Robot;
 
 @Autonomous(name = "OwlinDrive", group = Constants.GroupNames.Autonomous,preselectTeleOp = "TeleOp")
@@ -27,9 +27,9 @@ public class Owlin extends OpMode {
     @Override
     public void loop() {
         if (gamepad1.a) {
-            driveMovements.move(MotorDirection.FORWARD);
+            // driveMovements.move(MotorDirection.FORWARD);
         } else {
-            driveMovements.move(MotorDirection.STOP);
+            // driveMovements.move(MotorDirection.STOP);
         }
 
         robot.odometry.update();

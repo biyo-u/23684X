@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.EagleMatrix;
 
-import org.firstinspires.ftc.teamcode.Subsystems.GoBildaPinpoint;
-import org.firstinspires.ftc.teamcode.EagleMatrix.DriveMovements.MotorDirection;
+import org.firstinspires.ftc.teamcode.Subsystems.GoBildaPinpointDriver;
+import org.firstinspires.ftc.teamcode.EagleMatrix.DriveMovements;
 
 // this is where you will put odometry and eaglematrix together yayayayayayayayayayayayaayayayayayayayayay
 public class Chirp {
-	GoBildaPinpoint gpe;
+	GoBildaPinpointDriver gpe;
 	DriveMovements driveMovements;
 
 	public void HeadToY( double distanceY) {
@@ -17,17 +17,17 @@ public class Chirp {
 		if (gpe.getPosY() > distanceY) ;
 		{
 
-			driveMovements.move(MotorDirection.FORWARD);
+			 driveMovements.EagleFlow(0,1,0);
 
 		}
 		if (gpe.getPosY() < distanceY) ;
 		{
 
-			driveMovements.move(MotorDirection.BACKWARD);
+			// driveMovements.move(MotorDirection.BACKWARD);
 		}
 		if (gpe.getPosY() == distanceY) ;
 		{
-			driveMovements.stop();
+			driveMovements.EagleStop();
 		}
 	}
 
@@ -40,17 +40,17 @@ public class Chirp {
 		if (gpe.getPosX() > distanceX) ;
 		{
 
-			driveMovements.move(MotorDirection.STRAFE_RIGHT);
+			// driveMovements.move(MotorDirection.STRAFE_RIGHT);
 
 		}
 		if (gpe.getPosX() < distanceX) ;
 		{
 
-			driveMovements.move(MotorDirection.STRAFE_LEFT);
+			// driveMovements.move(MotorDirection.STRAFE_LEFT);
 		}
 		if (gpe.getPosX() == distanceX) ;
 		{
-			driveMovements.stop();
+			driveMovements.EagleStop();
 		}
 	}
 
@@ -62,10 +62,10 @@ public class Chirp {
 
 		if (gpe.getHeading() > angle);{
 
-			driveMovements.move(MotorDirection.ROTATE_CLOCKWISE);
+			// driveMovements.move(MotorDirection.ROTATE_CLOCKWISE);
 
 		} if (gpe.getHeading() == angle);{
-			driveMovements.stop();
+			driveMovements.EagleStop();
 		}
 	}
 }
