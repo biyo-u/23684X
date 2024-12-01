@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
-import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriverRR;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -39,14 +36,14 @@ public class Robot {
         DcMotor rearRight = hardwareMap.get(DcMotor.class, "rearRight");
 
         IMU imu = hardwareMap.get(IMU.class, "imu");
-        GoBildaPinpointDriverRR odometryComputer = hardwareMap.get(GoBildaPinpointDriverRR.class, "odometry");
+//        GoBildaPinpoint odometryComputer = hardwareMap.get(GoBildaPinpoint.class, "odometry");
 
         // Initialize Public Subsystems
         compass = new Compass(imu);
 //        compass = new Compass(odometryComputer);
         intake = new Intake(clawServo, wristServo);
         lift = new Lift(liftMotorLeft, liftMotorRight, shoulderMotor, liftServoTiltRight, liftServoTiltLeft, rightHangServo, leftHangServo);
-        drive = new Drive(frontLeft, frontRight, rearLeft, rearRight, this);
-        odometry = new Odometry(odometryComputer, compass);
+        drive = new Drive(frontLeft, frontRight, rearLeft, rearRight, compass);
+//        odometry = new Odometry(odometryComputer, compass);
     }
 }

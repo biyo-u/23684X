@@ -4,6 +4,8 @@ import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriverRR;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.IMU;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 import java.util.Locale;
 
 public class Compass {
@@ -27,7 +29,7 @@ public class Compass {
             return odocomp.getHeading();
         } else {
             model = "REV Hub IMU";
-            return imu.getRobotYawPitchRollAngles().getYaw();
+            return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
         }
     }
     public void resetYaw() {

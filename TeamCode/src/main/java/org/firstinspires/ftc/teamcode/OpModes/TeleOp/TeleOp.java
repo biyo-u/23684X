@@ -16,7 +16,7 @@ public class TeleOp extends OpMode {
     @Override
     public void loop() {
         // Drive the robot with the gamepad
-        robot.drive.driveMecanumRobotCentric(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+        robot.drive.driveMecanumFieldCentric(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
         // Reset IMU for Field Centric
         if (gamepad1.left_bumper) {
@@ -64,13 +64,13 @@ public class TeleOp extends OpMode {
             robot.intake.clawClose();
         }
 
-        robot.odometry.update();
+//        robot.odometry.update();
 
         // Telemetry  TODO: if anything else needs telemetry, add it
         telemetry.addLine(robot.lift.getTelemetry());
         telemetry.addLine(robot.lift.getJointLiftPosition());
         telemetry.addLine(robot.intake.getTelemetry());
-        telemetry.addLine(robot.odometry.getTelemetry());
+//        telemetry.addLine(robot.odometry.getTelemetry());
         telemetry.addLine(robot.compass.getTelemetry());
     }
 }
