@@ -31,9 +31,10 @@ public class Auto extends OpMode {
 
     @Override
     public void loop() {
-        while (autoDriver.moveTo(new Position(10, 0, 0, AngleUnit.DEGREES))) {
+        while (autoDriver.moveTo(new Position(10, 0, 0, AngleUnit.DEGREES), 0.5)) {
             codeLoop();
         }
+        terminateOpModeNow();
     }
 
     public void codeLoop(){
