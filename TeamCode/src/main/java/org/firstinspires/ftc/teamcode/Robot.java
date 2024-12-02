@@ -5,6 +5,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+import org.firstinspires.ftc.teamcode.EagleMatrix.AutoDriver;
 import org.firstinspires.ftc.teamcode.Subsystems.Compass;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.GoBildaPinpointDriver;
@@ -18,7 +22,8 @@ public class Robot {
     public Lift lift;
     public Drive drive;
     public Compass compass;
-    public Odometry odometry;
+    public GoBildaPinpointDriver odometry;
+    public AutoDriver autoDriver;
 
     public Robot(HardwareMap hardwareMap) {
         // Private Devices
@@ -45,6 +50,16 @@ public class Robot {
         intake = new Intake(clawServo, wristServo);
         lift = new Lift(liftMotorLeft, liftMotorRight, shoulderMotor, liftServoTiltRight, liftServoTiltLeft, rightHangServo, leftHangServo);
         drive = new Drive(frontLeft, frontRight, rearLeft, rearRight, compass);
+
+
+        this.odometry = hardwareMap.get(GoBildaPinpointDriver.class, "odometry");
+        this.odometry.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
+        this.odometry.setOffsets(-6.44, 6.8745);
+        this.odometry.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+        this.odometry.resetPosAndIMU();
+        this.odometry.setPosition(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));
+
+        this.autoDriver = new AutoDriver(this, odometry);
 //        odometry = new Odometry(odometryComputer, compass);
     }
 }

@@ -34,7 +34,7 @@ public class Owlin extends OpMode {
 
         robot.odometry.update();
 
-        telemetry.addLine(robot.odometry.getTelemetry());
+        // telemetry.addLine(robot.odometry.getTelemetry());
         telemetry.addLine(robot.compass.getTelemetry());
     }
 }

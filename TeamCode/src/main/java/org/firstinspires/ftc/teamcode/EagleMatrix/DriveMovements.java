@@ -8,7 +8,6 @@ import org.firstinspires.ftc.teamcode.Robot;
 
 public class DriveMovements {
     Robot robot;
-
     double modifier = 0.6;
     double rest = 0;
 
