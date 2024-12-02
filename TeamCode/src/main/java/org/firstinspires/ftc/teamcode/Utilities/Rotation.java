@@ -1,33 +1,27 @@
 package org.firstinspires.ftc.teamcode.Utilities;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.jetbrains.annotations.NotNull;
 
 public class Rotation {
+	double angle;
 
-    public double heading;
+	public Rotation(double angle, AngleUnit unit) {
+		if (unit == AngleUnit.DEGREES) {
+			this.angle = angle;
+		} else if (unit == AngleUnit.RADIANS){
+			this.angle = Math.toDegrees(angle);
+		}
+	}
 
-    public Rotation(double heading, AngleUnit unit) {
-        if (unit == AngleUnit.RADIANS) {
-            this.heading = Math.toDegrees(heading);
-        } else {
-            this.heading = heading;
-        }
-    }
+	public double getAngle() {
+		return angle;
+	}
 
-    public double getHeading() {
-        return heading;
-    }
-
-    public void setHeading(double heading, AngleUnit unit) {
-        if (unit == AngleUnit.RADIANS) {
-            this.heading = Math.toDegrees(heading);
-        } else {
-            this.heading = heading;
-        }
-    }
-
-    public boolean equals(@NotNull Rotation obj) {
-        return heading == obj.heading;
-    }
+	public void setAngle(double angle, AngleUnit unit) {
+		if (unit == AngleUnit.DEGREES) {
+			this.angle = angle;
+		} else if (unit == AngleUnit.RADIANS){
+			this.angle = Math.toDegrees(angle);
+		}
+	}
 }

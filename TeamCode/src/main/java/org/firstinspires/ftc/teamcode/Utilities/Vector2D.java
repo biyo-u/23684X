@@ -6,27 +6,28 @@ import androidx.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 public class Vector2D {
-    public double x;
-    public double y;
+    private Distance x;
+    private Distance y;
 
-    public Vector2D(double x, double y) {
+    // Make this take a DistanceValue
+    public Vector2D(Distance x, Distance y) {
         this.x = x;
         this.y = y;
     }
 
     public double getX() {
-        return x;
+        return x.getDistance();
     }
 
     public double getY() {
-        return y;
+        return y.getDistance();
     }
 
-    public void setX(double x) {
+    public void setX(Distance x) {
         this.x = x;
     }
 
-    public void setY(double y) {
+    public void setY(Distance y) {
         this.y = y;
     }
 

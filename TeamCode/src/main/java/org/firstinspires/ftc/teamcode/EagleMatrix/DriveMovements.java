@@ -42,6 +42,8 @@ public class DriveMovements {
      * @param Y The power applied to the motors, Y
      * @param TARGETHEADING The power applied to the motors, TARGETHEADING
      */
+    // TODO: Edit comment
+    // TODO: Check if field centric works
     public void EagleFlow(double X, double Y, double TARGETHEADING){
         X = X * modifier;
         Y = -Y * modifier;

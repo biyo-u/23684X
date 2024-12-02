@@ -22,8 +22,6 @@ public class Odometry {
         this.compass = compass;
 
         // Sets Odometry offsets
-        // TODO: Tune odometry offsets with our final robot
-        // TODO: Confirm setEncoderDirections by running EncoderDirectionTest
         this.odometry.setOffsets(-173.0, -156); //measured in mm
         this.odometry.setEncoderResolution(GoBildaPinpointDriverRR.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
         this.odometry.setEncoderDirections(GoBildaPinpointDriverRR.EncoderDirection.REVERSED, GoBildaPinpointDriverRR.EncoderDirection.FORWARD);

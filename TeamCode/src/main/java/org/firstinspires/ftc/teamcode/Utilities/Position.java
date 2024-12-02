@@ -8,8 +8,8 @@ public class Position {
     private Rotation rotation;
     private Vector2D vector2D;
 
-    public Position(double x, double y, double heading, AngleUnit unit) {
-        this.rotation = new Rotation(heading, unit);
+    public Position(Distance x, Distance y, Rotation rotation) {
+        this.rotation = rotation;
         this.vector2D = new Vector2D(x, y);
     }
 
@@ -34,20 +34,19 @@ public class Position {
     }
 
     public double getHeading() {
-        return rotation.getHeading();
+        return rotation.getAngle();
     }
 
-    // sET X, Y, AND HEADING
-    public void setX(double x) {
+    public void setX(Distance x) {
         vector2D.setX(x);
     }
 
-    public void setY(double y) {
+    public void setY(Distance y) {
         vector2D.setY(y);
     }
 
     public void setHeading(double heading) {
-        rotation.setHeading(heading, AngleUnit.DEGREES);
+        rotation.setAngle(heading, AngleUnit.DEGREES);
     }
 
     public void setVector2D(Vector2D vector2D) {

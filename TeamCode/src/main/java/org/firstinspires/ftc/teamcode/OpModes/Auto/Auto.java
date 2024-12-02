@@ -9,7 +9,9 @@ import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.EagleMatrix.AutoDriver;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.Subsystems.GoBildaPinpointDriver;
+import org.firstinspires.ftc.teamcode.Utilities.Distance;
 import org.firstinspires.ftc.teamcode.Utilities.Position;
+import org.firstinspires.ftc.teamcode.Utilities.Rotation;
 
 @Autonomous(name = "Auto", group = Constants.GroupNames.Autonomous, preselectTeleOp = "TeleOp")
 public class Auto extends OpMode {
@@ -31,7 +33,8 @@ public class Auto extends OpMode {
 
     @Override
     public void loop() {
-        while (autoDriver.moveTo(new Position(10, 0, 0, AngleUnit.DEGREES), 0.5)) {
+        // TODO: HUGE and HIGH EFFORT: Make this cleaner
+        while (autoDriver.moveTo(new Position(new Distance(24, DistanceUnit.INCH), new Distance(24, DistanceUnit.INCH), new Rotation(180, AngleUnit.DEGREES)), new Distance(0.5, DistanceUnit.INCH), new Rotation(5, AngleUnit.DEGREES))) {
             codeLoop();
         }
         terminateOpModeNow();
