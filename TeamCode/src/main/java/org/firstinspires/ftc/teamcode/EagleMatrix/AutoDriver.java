@@ -13,7 +13,8 @@ public class AutoDriver {
 	GoBildaPinpointDriver odometry;
 	DriveMovements driveMovements;
 	boolean initialized = false;
-	double startPosition;
+	Pose2D startPosition;
+    boolean waypoint = false;
 
 	// speed of robot = sin(((target location - current location)/target location) * pi) * speed modifier
 	// y = sin(xπ) * speed modifier (0.6) (MODIFIER MUST BE LESS OR EQUAL TO 1)
@@ -41,14 +42,18 @@ public class AutoDriver {
 	public boolean moveTo(Position position, double sensitivity) {
 		odometry.update();
 		Pose2D currentPosition = odometry.getPosition();
+        if (!waypoint){
+            waypoint = true;
+            startPosition = currentPosition;
+        }
 
 		if (!initialized) {
 
 		}
 
-		double x = 0;
-		double y = 0;
-		double heading = 0;
+		double x = hummingbird(startPosition.getX(DistanceUnit.INCH), currentPosition.getX(DistanceUnit.INCH), position.getVector2D().getX());
+		double y = hummingbird(startPosition.getY(DistanceUnit.INCH), currentPosition.getY(DistanceUnit.INCH), position.getVector2D().getY());
+		double heading = hummingbird(startPosition.getHeading(AngleUnit.DEGREES), currentPosition.getHeading(AngleUnit.DEGREES), position.getHeading());
 
 		double yDifferenceFromTarget = Math.abs(currentPosition.getY(DistanceUnit.INCH)) - Math.abs(position.getVector2D().getY());
 		if (yDifferenceFromTarget > -sensitivity && yDifferenceFromTarget < sensitivity){
@@ -85,6 +90,16 @@ public class AutoDriver {
 			heading = -1;
 		}
 
+        driveMovements.EagleFlow(x, y, heading);
+
 		return !(x > -Constants.doubleErrorThreshold) || !(x < Constants.doubleErrorThreshold) || !(y > -Constants.doubleErrorThreshold) || !(y < Constants.doubleErrorThreshold) || !(heading > -Constants.doubleErrorThreshold) || !(heading < Constants.doubleErrorThreshold);
 	}
+
+    public double hummingbird(double startingPosition, double currentPosition, double endPosition){
+        double robotspeed = 0.0;
+        double percentPathComplete = currentPosition/(endPosition-startingPosition);
+        //y\ =\frac{\left(\ \frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2}\left(\frac{x-0.5}{0.15}\right)^{2}}\right)}{1}
+        robotspeed = (1 / Math.sqrt(2 * Math.PI)) * Math.exp(-Math.pow(percentPathComplete-0.5 / 0.15, 2)); // calculate speed on a bell curve
+        return robotspeed;
+    }
 }

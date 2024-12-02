@@ -228,10 +228,10 @@ public class Diagnostics extends OpMode {
             first_hang_right.setPosition(0.7);
         }
 
-        telemetry.addLine(robot.odometry.getTelemetry());
+        // telemetry.addLine(robot.odometry.getTelemetry());
         telemetry.addData("Heading", robot.compass.getHeading());
-        telemetry.addData("X:", robot.odometry.rawXTelemetry());
-        telemetry.addData("Y:", robot.odometry.rawYTelemetry());
-        telemetry.addData("Heading:", robot.odometry.rawHeadingTelemetry());
+        // telemetry.addData("X:", robot.odometry.rawXTelemetry());
+        // telemetry.addData("Y:", robot.odometry.rawYTelemetry());
+        // telemetry.addData("Heading:", robot.odometry.rawHeadingTelemetry());
     }
 }
