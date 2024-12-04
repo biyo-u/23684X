@@ -36,7 +36,7 @@ public class LinearAuto extends LinearOpMode {
 
         waitForStart();
 
-        while (autoDriver.moveTo(new Position(new Distance(24, DistanceUnit.INCH), new Distance(24, DistanceUnit.INCH), new Rotation(180, AngleUnit.DEGREES)), new Distance(0.5, DistanceUnit.INCH), new Rotation(5, AngleUnit.DEGREES)) && opModeIsActive()) {
+        while (autoDriver.moveTo(new Position(new Distance(0, DistanceUnit.INCH), new Distance(24, DistanceUnit.INCH), new Rotation(0, AngleUnit.DEGREES)), new Distance(0.5, DistanceUnit.INCH), new Rotation(5, AngleUnit.DEGREES)) && opModeIsActive()) {
             codeLoop();
         }
         terminateOpModeNow();
@@ -45,7 +45,16 @@ public class LinearAuto extends LinearOpMode {
     public void codeLoop(){
         telemetry.addLine("Position: " + odometry.getPosition());
         telemetry.addData("Count: ", count);
+
+        telemetry.addData("X: ", odometry.getPosition().getX(DistanceUnit.INCH));
+        telemetry.addData("Y: ", odometry.getPosition().getY(DistanceUnit.INCH));
+        telemetry.addData("Heading: ", odometry.getPosition().getHeading(AngleUnit.DEGREES));
         count++;
+
+        telemetry.addData("FR Power", robot.drive.getFrontRight().getPower());
+        telemetry.addData("FL Power", robot.drive.getFrontLeft().getPower());
+        telemetry.addData("RL Power", robot.drive.getRearLeft().getPower());
+        telemetry.addData("RR Power", robot.drive.getRearRight().getPower());
         telemetry.update();
     }
 }
