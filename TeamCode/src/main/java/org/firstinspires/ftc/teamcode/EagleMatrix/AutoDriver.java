@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.EagleMatrix;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
@@ -9,7 +11,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.GoBildaPinpointDriver;
 import org.firstinspires.ftc.teamcode.Utilities.Distance;
 import org.firstinspires.ftc.teamcode.Utilities.Position;
 import org.firstinspires.ftc.teamcode.Utilities.Rotation;
-
 public class AutoDriver {
 	Robot robot;
 	GoBildaPinpointDriver odometry;
@@ -31,6 +32,7 @@ public class AutoDriver {
 		originalMovementDirections = new Position(new Distance(0, DistanceUnit.INCH), new Distance(0, DistanceUnit.INCH), new Rotation(0, AngleUnit.DEGREES));
 
 		if (!initialized) {
+			telemetry.addData("Initialized", "true");
 			startPosition = currentPosition;
 			if (startPosition.getX() == position.getX()){
 				originalMovementDirections.setX(new Distance(0, DistanceUnit.INCH));
@@ -147,6 +149,11 @@ public class AutoDriver {
 		robot.drive.getFrontRight().setPower(frontRightPower);
 		robot.drive.getRearLeft().setPower(backLeftPower);
 		robot.drive.getRearRight().setPower(backRightPower);
+
+		telemetry.addData("FR Power", robot.drive.getFrontRight().getPower());
+		telemetry.addData("FL Power", robot.drive.getFrontLeft().getPower());
+		telemetry.addData("RL Power", robot.drive.getRearLeft().getPower());
+		telemetry.addData("RR Power", robot.drive.getRearRight().getPower());
 
 		// Return False to end the while when all conditions are met
 		return !(x > -Constants.doubleErrorThreshold) || !(x < Constants.doubleErrorThreshold) || !(y > -Constants.doubleErrorThreshold) || !(y < Constants.doubleErrorThreshold) || !(heading > -Constants.doubleErrorThreshold) || !(heading < Constants.doubleErrorThreshold);
