@@ -28,6 +28,8 @@ public class Auto extends OpMode {
         this.odometry.resetPosAndIMU();
         this.odometry.setPosition(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));
 
+        this.robot = new Robot(hardwareMap);
+
         this.autoDriver = new AutoDriver(robot, odometry);
     }
 
