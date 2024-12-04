@@ -130,7 +130,23 @@ public class AutoDriver {
 		double yPower = y * ySpeed;
 		double headingPower = heading * headingSpeed;
 
-		driveMovements.EagleFlow(xPower, yPower, headingPower);
+		double currentHeading = currentPosition.getHeading();
+
+		double rotX = xPower * Math.cos(-currentHeading) - yPower * Math.sin(-currentHeading);
+		double rotY = xPower * Math.sin(-currentHeading) + yPower * Math.cos(-currentHeading);
+
+		rotX = rotX * 1.1;
+
+		double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(headingPower), 1);
+		double frontLeftPower = (yPower + xPower + headingPower) / denominator;
+		double backLeftPower = (yPower - xPower + headingPower) / denominator;
+		double frontRightPower = (yPower - xPower - headingPower) / denominator;
+		double backRightPower = (yPower + xPower - headingPower) / denominator;
+
+		robot.drive.getFrontLeft().setPower(frontLeftPower);
+		robot.drive.getFrontRight().setPower(frontRightPower);
+		robot.drive.getRearLeft().setPower(backLeftPower);
+		robot.drive.getRearRight().setPower(backRightPower);
 
 		// Return False to end the while when all conditions are met
 		return !(x > -Constants.doubleErrorThreshold) || !(x < Constants.doubleErrorThreshold) || !(y > -Constants.doubleErrorThreshold) || !(y < Constants.doubleErrorThreshold) || !(heading > -Constants.doubleErrorThreshold) || !(heading < Constants.doubleErrorThreshold);
