@@ -5,68 +5,56 @@ import org.firstinspires.ftc.teamcode.Robot;
 /**
  * DriveMovements is where you build the drivetrain movements based on motor direction.
  */
-
 public class DriveMovements {
     Robot robot;
+
     double modifier = 0.6;
     double rest = 0;
-
     /**
-
+     * MotorDirection is where you set the direction of the motors based on the desired action.
      */
+    public enum MotorDirection {
+        FORWARD (1, 1, 1, 1),
+        BACKWARD (-1,-1,-1,-1),
+        STRAFE_LEFT (-1,1,1,-1),
+        STRAFE_RIGHT (1,-1,-1,1),
+        ANGLE_STRAFE_FORWARD_RIGHT (1, 0, 0, 1),
+        ANGLE_STRAFE_FORWARD_LEFT (0,1,1,0),
+        ANGLE_STRAFE_BACKWARD_RIGHT (-1,0,0,-1),
+        ANGLE_STRAFE_BACKWARD_LEFT (0,-1,-1,0),
+        ROTATE_CLOCKWISE (1,-1,1,-1),
+        ROTATE_COUNTERCLOCKWISE (-1,1,-1,1),
+        STOP (0,0,0,0);
+
+        private final double FL;
+        private final double FR;
+        private final double RL;
+        private final double RR;
+
+        MotorDirection(double FL, double FR, double RL, double RR) {
+            this.FL = FL;
+            this.FR = FR;
+            this.RL = RL;
+            this.RR = RR;
+        }
+    }
+
     public DriveMovements(Robot robot){
         this.robot = robot;
     }
     /**
-     * Eagleflow is a method that determines power of the motors based on direction. It will power the motors in order to achieve a desired movement, such as strafing, rotation, driving, and diagonal movement.
-     * <p>
-     * Strafe Left: FL = -1, FR = 1, RL = 1, RR = -1
-     *  <p>
-     * Strafe Right: FL = 1, FR = -1, RL = -1, RR = 1
-     * <p>
-     * Angle Strafe Forward Right: FL = 1, FR = 0, RL = 0, RR = 1
-     * <p>
-     * Angle Strafe Forward Left: FL = 0, FR = 1, RL = 1, RR = 0
-     * <p>
-     * Angle Strafe Backward Right: FL = -1, FR = 0, RL = 0, RR = -1
-     * <p>
-     * Angle Strafe Backward Left: FL = 0, FR = -1, RL = -1, RR = 0
-     * <p>
-     * Rotate Clockwise: FL = 1, FR = -1, RL = 1, RR = -1
-     * <p>
-     * Rotate Counter-clockwise: FL = -1, FR = 1, RL = -1, RR = 1
-     * <p>
-     * Stop: FL = 0, FR = 0, RL = 0, RR = 0
-     * @param X The power applied to the motors, X
-     * @param Y The power applied to the motors, Y
-     * @param TARGETHEADING The power applied to the motors, TARGETHEADING
+     * move is a method that determines power of the motors based on direction. It will power the motors in order to achieve a desired movement, such as strafing, rotation, driving, and diagonal movement.
+     *
+     * @param direction The direction of power applied to the motors
      */
-    // TODO: Edit comment
-    // TODO: Check if field centric works
-    public void EagleFlow(double X, double Y, double TARGETHEADING){
-        X = X * modifier;
-        Y = -Y * modifier;
-        TARGETHEADING = TARGETHEADING * modifier;
-        double CURRENTHEADING = robot.compass.getHeading();
-
-        double rotX = X * Math.cos(-CURRENTHEADING) - Y * Math.sin(-CURRENTHEADING);
-        double rotY = X * Math.sin(-CURRENTHEADING) + Y * Math.cos(-CURRENTHEADING);
-
-        rotX = rotX * 1.1;
-
-        double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(TARGETHEADING), 1);
-        double frontLeftPower = (Y + X + TARGETHEADING) / denominator;
-        double backLeftPower = (Y - X + TARGETHEADING) / denominator;
-        double frontRightPower = (Y - X - TARGETHEADING) / denominator;
-        double backRightPower = (Y + X - TARGETHEADING) / denominator;
-
-        robot.drive.getFrontLeft().setPower(frontLeftPower);
-        robot.drive.getFrontRight().setPower(frontRightPower);
-        robot.drive.getRearLeft().setPower(backLeftPower);
-        robot.drive.getRearRight().setPower(backRightPower);
+    public void move(MotorDirection direction){
+        robot.drive.getFrontLeft().setPower(direction.FL * modifier);
+        robot.drive.getFrontRight().setPower(direction.FR * modifier);
+        robot.drive.getRearLeft().setPower(direction.RL * modifier);
+        robot.drive.getRearRight().setPower(direction.RR * modifier);
     }
     // Drivetrain stops
-    public void EagleStop(){
+    public void stop(){
         robot.drive.getFrontLeft().setPower(rest);
         robot.drive.getFrontRight().setPower(rest);
         robot.drive.getRearLeft().setPower(rest);

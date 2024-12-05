@@ -8,13 +8,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.teamcode.EagleMatrix.AutoDriver;
 import org.firstinspires.ftc.teamcode.Subsystems.Compass;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.GoBildaPinpointDriver;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Lift;
-import org.firstinspires.ftc.teamcode.Subsystems.Odometry;
 
 public class Robot {
     // Public Subsystems
@@ -23,7 +21,6 @@ public class Robot {
     public Drive drive;
     public Compass compass;
     public GoBildaPinpointDriver odometry;
-    public AutoDriver autoDriver;
 
     public Robot(HardwareMap hardwareMap) {
         // Private Devices
@@ -59,7 +56,6 @@ public class Robot {
         this.odometry.resetPosAndIMU();
         this.odometry.setPosition(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));
 
-        this.autoDriver = new AutoDriver(this, odometry);
 //        odometry = new Odometry(odometryComputer, compass);
     }
 }
