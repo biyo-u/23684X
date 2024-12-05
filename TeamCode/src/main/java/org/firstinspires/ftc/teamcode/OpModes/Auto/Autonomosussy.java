@@ -15,12 +15,9 @@ import org.firstinspires.ftc.teamcode.Utilities.Distance;
 import org.firstinspires.ftc.teamcode.Utilities.Position;
 import org.firstinspires.ftc.teamcode.Utilities.Rotation;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 
 @Autonomous(name = "EagleMatrix 0.2.0", group = Constants.GroupNames.Autonomous, preselectTeleOp = "TeleOp")
-public class Auto extends OpMode {
+public class Autonomosussy extends OpMode {
     private Robot robot; // imports robot hardwareMap class
     private GoBildaPinpointDriver odometry; // imports robot odometry class
     private DriveMovements driveMovements; // imports EagleMatrix movement class for drivetrain
@@ -37,8 +34,6 @@ public class Auto extends OpMode {
     double zetaX2 = 0; // robot's target Y position cast to a double
     double zetaHeading = 0; // robot's current heading cast to a double
     double zetaHeading2 = 0; // robot's target heading cast to a double
-
-    String actionCounter = "PREP TO SCORE";
 
     @Override
     public void init() {
@@ -69,76 +64,26 @@ public class Auto extends OpMode {
     @Override
     public void loop() {
 
-        switch (actionCounter) {
+        if (Double.compare(zetaY, zetaY2) > 0) {
+            // if compare returns a negative value, X1 > X2
+            telemetry.addData("AUTO STATUS", "OVERSHOT");
+            driveMovements.move(MotorDirection.BACKWARD);
 
-            case "PREP TO SCORE":
-                Timer timertwo = new Timer("Timer");
-                TimerTask preptwo = new TimerTask() {
-                    @Override
-                    public void run() {
-                        liftMovements.ClawClose();
-                        liftMovements.WristOut();
-                        liftMovements.ShoulderUp();
-                    }
-                };
+        } else if (Double.compare(zetaY, zetaY2) < 0 && !GoalMet) {
+            // if compare returns a positive value, X1 < X2
+            telemetry.addData("AUTO STATUS", "INCOMPLETE");
+            driveMovements.move(MotorDirection.FORWARD);
 
-                TimerTask prepone = new TimerTask() {
-                    @Override
-                    public void run() {
-                        liftMovements.LiftRise();
-                        timertwo.schedule(preptwo, 3000);
-                    }
-                };
+        } else if (Double.compare(zetaY, zetaY2) == 0) {
+            // if compare returns a zero value, X1 == X2
+            telemetry.addData("AUTO STATUS", "COMPLETE");
+            driveMovements.move(MotorDirection.STOP);
+            liftMovements.ClawOpen();
+            GoalMet = true;
 
-                liftMovements.LiftRise();
-                timertwo.schedule(prepone,1000);
-
-            case "MOVE TO SUBMERSIBLE":
-                if (Double.compare(zetaY, zetaY2) > 0) {
-                    // if compare returns a negative value, X1 > X2
-                    telemetry.addData("AUTO STATUS", "OVERSHOT");
-                    driveMovements.move(MotorDirection.BACKWARD);
-
-                } else if (Double.compare(zetaY, zetaY2) < 0 && !GoalMet) {
-                    // if compare returns a positive value, X1 < X2
-                    telemetry.addData("AUTO STATUS", "INCOMPLETE");
-                    driveMovements.move(MotorDirection.FORWARD);
-
-                } else if (Double.compare(zetaY, zetaY2) == 0) {
-                    // if compare returns a zero value, X1 == X2
-                    telemetry.addData("AUTO STATUS", "COMPLETE");
-                    driveMovements.move(MotorDirection.STOP);
-                    liftMovements.ClawOpen();
-                    GoalMet = true;
-
-                } else {
-                    telemetry.addData("AUTO STATUS", "ERROR");
-                }
-                actionCounter = "PLACE PRELOADED SPECIMEN";
-                break;
-
-            case "PLACE PRELOADED SPECIMEN":
-                Timer timerone = new Timer("Timer");
-                TimerTask waittwo = new TimerTask() {
-                    @Override
-                    public void run() {
-                        liftMovements.ClawOpen();
-                    }
-                };
-
-                TimerTask waitone = new TimerTask() {
-                    @Override
-                    public void run() {
-                        liftMovements.LiftLower();
-                        timerone.schedule(waittwo, 1000);
-                    }
-                };
-
-                liftMovements.LiftRise();
-                timerone.schedule(waitone,1000);
+        } else {
+            telemetry.addData("AUTO STATUS", "ERROR");
         }
-
-
 
         telemetry.addLine("ZETA PRIME LOCATIONS");
         telemetry.addData("TargetY (Forward, Backward) (INCHES)", migration.getY());
