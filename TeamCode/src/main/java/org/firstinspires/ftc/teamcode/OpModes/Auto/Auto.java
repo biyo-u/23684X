@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.Utilities.Rotation;
 import java.util.Timer;
 import java.util.TimerTask;
 
-@Autonomous(name = "EagleMatrix 0.2.0", group = Constants.GroupNames.Autonomous, preselectTeleOp = "TeleOp")
+@Autonomous(name = "AUTO: EagleMatrix 0.2.8", group = Constants.GroupNames.Autonomous, preselectTeleOp = "TeleOp")
 public class Auto extends OpMode {
     private Robot robot; // imports robot hardwareMap class
     private GoBildaPinpointDriver odometry; // imports robot odometry class

@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Utilities.Position;
 import org.firstinspires.ftc.teamcode.Utilities.Rotation;
 
 
-@Autonomous(name = "EagleMatrix 0.2.0", group = Constants.GroupNames.Autonomous, preselectTeleOp = "TeleOp")
+@Autonomous(name = "AutoDiagnosticsX", group = Constants.GroupNames.Autonomous, preselectTeleOp = "TeleOp")
 public class Autonomosussy extends OpMode {
     private Robot robot; // imports robot hardwareMap class
     private GoBildaPinpointDriver odometry; // imports robot odometry class
