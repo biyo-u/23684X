@@ -1,6 +1,6 @@
 # 23684X
 
-The FIFTH Tech Titans GitHub repository. 
+The FIFTH Tech Titans GitHub repository. Home of EagleMatrix
 1. 23684-depreciated
 2. 23684RR
 3. 23684
@@ -16,8 +16,6 @@ rearLeft, rearRight
 Whenever something is given a power, there should not be a stop() function. Instead, set the power
 to 0 to stop it.
 If there isn't a way to set power (like moveUp and moveDown) then there should be a stop() function.
-
-TODO: Label controller
 
 ### Gamepad 1 (Drive):
 
@@ -46,3 +44,8 @@ TODO: Label controller
 - Y: Wrist Up
 - A: Nothing
 - B: Nothing
+
+## EagleMatrix
+Is Roadrunner turning out to be a massive headache? Using a GoBildaPinpointDriver and encoders... or drive encoders? Do you need a simpler, easier way to create the basis you need for automated robot drivetrain AND scoring system movement? Well... say hello to EagleMatrix! Unlike Roadrunner, this completely customizable, easy to implement and easy to adapt drivepath system uses prexisting FTC SDK code to create a comprehensive-yet-straight forward library of code you can call upon to create your autonomous! With a modular and adaptive design that you can open up and change to your needs, and the ability to be easily and effectively implemented for BOTH TELEOP AND AUTO OpModes, this is a "keep it simple stupid" solution to Roadrunner. Use an external IMU or odometry pods, AprilTags or other vision processing, and sensor inputs in a clean, effective library. EagleMatrix, flying high. 
+
+*DISCLAIMER: EAGLEMATRIX 0.2.0 IS IN EXTREMELY EARLY DEVELOPMENT. THE VERSION SEEN HERE IS SUBJECT TO CHANGE, A COMPLETE REDESIGN, AND OTHER UPDATES. THIS VERSION IS DEEPLY INTEGRATED WITH THE TECH TITANS CODEBASE, WHILE THE FINAL VERSION WILL ALLOW FOR EASY ADDITION OF AND/OR TO PREEXISTING CODE!*
