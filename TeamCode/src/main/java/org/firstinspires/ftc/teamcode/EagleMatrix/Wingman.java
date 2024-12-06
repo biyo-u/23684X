@@ -58,7 +58,7 @@ public class Wingman {
         TimerTask waittwo = new TimerTask() {
             @Override
             public void run() {
-                liftMovements.LiftRise();
+                liftMovements.LiftScoreChamber();
                 timerone.schedule(waitthree, 4000);
             }
         };

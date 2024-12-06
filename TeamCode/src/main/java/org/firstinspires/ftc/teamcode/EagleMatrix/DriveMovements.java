@@ -11,7 +11,7 @@ public class DriveMovements {
     double modifier = 0.6;
     double rest = 0;
     /**
-     * MotorDirection is where you set the direction of the motors based on the desired action.
+     * The enum MotorDirection is where you set the direction of the drivetrain motors based on the desired action.
      */
     public enum MotorDirection {
         FORWARD (1, 1, 1, 1),
@@ -54,6 +54,9 @@ public class DriveMovements {
         robot.drive.getRearRight().setPower(direction.RR * modifier);
     }
     // Drivetrain stops
+    /**
+     * stop is a method that shuts off all power of the motors.
+     */
     public void stop(){
         robot.drive.getFrontLeft().setPower(rest);
         robot.drive.getFrontRight().setPower(rest);
