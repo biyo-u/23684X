@@ -63,18 +63,24 @@ public class Autonomosussy extends OpMode {
 
 	@Override
 	public void loop() {
+		odometry.update();
 
-		if (Double.compare(zetaY, zetaY2) > 0.2) {
+		Pose2D zetaPosition = odometry.getPosition();
+		zetaY = zetaPosition.getY(DistanceUnit.INCH); // sets zetaPrime
+		zetaX = zetaPosition.getX(DistanceUnit.INCH); // sets zetaPrime
+		zetaHeading = zetaPosition.getHeading(AngleUnit.DEGREES); // sets zetaPrime
+
+		if (Double.compare(odometry.getPosY(), migration.getX()) > 0.2) {
 			// if compare returns a negative value, X1 > X2
 			telemetry.addData("AUTO STATUS", "OVERSHOT");
 			driveMovements.move(MotorDirection.BACKWARD);
 
-		} else if (Double.compare(zetaY, zetaY2) < -0.2 && !GoalMet) {
+		} else if (Double.compare(odometry.getPosY(), migration.getY()) < -0.2 && !GoalMet) {
 			// if compare returns a positive value, X1 < X2
 			telemetry.addData("AUTO STATUS", "INCOMPLETE");
 			driveMovements.move(MotorDirection.FORWARD);
 
-		} else if (Double.compare(zetaY, zetaY2) < 0.2 && Double.compare(zetaY, zetaY2) > -0.2) {
+		} else if (Double.compare(odometry.getPosY(), migration.getY()) < 0.2 && Double.compare(odometry.getPosY(), migration.getY()) > -0.2) {
 			// if compare returns a zero value, X1 == X2
 			telemetry.addData("AUTO STATUS", "COMPLETE");
 			driveMovements.move(MotorDirection.STOP);
@@ -91,7 +97,7 @@ public class Autonomosussy extends OpMode {
 		telemetry.addData("TargetX (Left, Right) (INCHES)", migration.getX());
 		telemetry.addData("CurrentX (Left, Right)", zetaX);
 		telemetry.addData("TargetHeading (Rotation) (DEGREES)", migration.getHeading());
-		telemetry.addData("CurrentHeading (Rotation)", odometry.getHeading());
+		telemetry.addData("CurrentHeading (Rotation)", zetaHeading);
 
 		telemetry.addLine("AUTO STATUS");
 		telemetry.addData("COUNT", counter);
