@@ -64,17 +64,17 @@ public class Autonomosussy extends OpMode {
     @Override
     public void loop() {
 
-        if (Double.compare(zetaY, zetaY2) > 0) {
+        if (Double.compare(zetaY, zetaY2) > 0.2) {
             // if compare returns a negative value, X1 > X2
             telemetry.addData("AUTO STATUS", "OVERSHOT");
             driveMovements.move(MotorDirection.BACKWARD);
 
-        } else if (Double.compare(zetaY, zetaY2) < 0 && !GoalMet) {
+        } else if (Double.compare(zetaY, zetaY2) < -0.2 && !GoalMet) {
             // if compare returns a positive value, X1 < X2
             telemetry.addData("AUTO STATUS", "INCOMPLETE");
             driveMovements.move(MotorDirection.FORWARD);
 
-        } else if (Double.compare(zetaY, zetaY2) == 0) {
+        } else if (Double.compare(zetaY, zetaY2) < 0.2 && Double.compare(zetaY, zetaY2) > -0.2) {
             // if compare returns a zero value, X1 == X2
             telemetry.addData("AUTO STATUS", "COMPLETE");
             driveMovements.move(MotorDirection.STOP);

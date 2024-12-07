@@ -116,17 +116,17 @@ public class Auto extends OpMode {
 
                 autoStage = "STAGE: MOVE TO SUBMERSIBLE";
 
-                if (Double.compare(zetaY, zetaY2) > 0) {
+                if (Double.compare(zetaY, zetaY2) > 0.2) {
                     // if compare returns a negative value, value1 > value2
                     autoStatus = "OVERSHOT";
                     driveMovements.move(MotorDirection.BACKWARD);
 
-                } else if (Double.compare(zetaY, zetaY2) < 0 && !GoalMet) {
+                } else if (Double.compare(zetaY, zetaY2) < -0.2 && !GoalMet) {
                     // if compare returns a positive value, value1 < value2
                     autoStatus = "INCOMPLETE";
                     driveMovements.move(MotorDirection.FORWARD);
 
-                } else if (Double.compare(zetaY, zetaY2) == 0) {
+                } else if (Double.compare(zetaY, zetaY2) < 0.2 && Double.compare(zetaY, zetaY2) > -0.2) {
                     // if compare returns a zero value, value1 == value2
                     autoStatus = "COMPLETE";
                     driveMovements.move(MotorDirection.STOP);
@@ -180,17 +180,17 @@ public class Auto extends OpMode {
                 double zetaY2_GOAL = nextGoal.getY();
 
                 // TODO: Run Autonomosussy to ensure this code will not print out NullPointerExceptions (8)
-                if (Double.compare(zetaY2_2, zetaY2_GOAL) > 0) {
+                if (Double.compare(zetaY2_2, zetaY2_GOAL) > 0.2) {
                     // if compare returns a negative value, value1 > value2
                     autoStatus = "OVERSHOT, BUT IT'S ALRIGHT";
                     driveMovements.move(MotorDirection.STOP);
                     liftMovements.LiftLower();
                     NextGoalMet = true;
-                } else if (Double.compare(zetaY2_2, zetaY2_GOAL) < 0 && NextGoalMet == false) {
+                } else if (Double.compare(zetaY2_2, zetaY2_GOAL) < -0.2 && NextGoalMet == false) {
                     // if compare returns a positive value, value1 < value2
                     autoStatus = "INCOMPLETE";
                     driveMovements.move(MotorDirection.BACKWARD);
-                } else if (Double.compare(zetaY2_2, zetaY2_GOAL) == 0) {
+                } else if (Double.compare(zetaY2_2, zetaY2_GOAL) < 0.2 && Double.compare(zetaY2_2, zetaY2_GOAL) > -0.2) {
                     // if compare returns a zero value, value1 == value2
                     autoStatus = "COMPLETE";
                     driveMovements.move(MotorDirection.STOP);
@@ -215,16 +215,16 @@ public class Auto extends OpMode {
                 zetaX2 = observationZone.getX();
 
                 // TODO: Run Autonomosussy to ensure this code will not print out NullPointerExceptions (8)
-                if (Double.compare(zetaY, zetaX2_3) > 0) {
+                if (Double.compare(zetaY, zetaX2_3) > 0.2) {
                     // if compare returns a negative value, value1 > value2
                     autoStatus = "OVERSHOT, BUT IT'S ALRIGHT";
                     driveMovements.move(MotorDirection.STOP);
                     FinalGoalMet = true;
-                } else if (Double.compare(zetaY, zetaX2_3) < 0 && FinalGoalMet == false) {
+                } else if (Double.compare(zetaY, zetaX2_3) < -0.2 && FinalGoalMet == false) {
                     // if compare returns a positive value, value1 < value2
                     autoStatus = "INCOMPLETE";
                     driveMovements.move(MotorDirection.STRAFE_RIGHT);
-                } else if (Double.compare(zetaY, zetaX2_3) == 0) {
+                } else if (Double.compare(zetaY, zetaX2_3) < 0.2 && Double.compare(zetaY, zetaX2_3) > -0.2) {
                     // if compare returns a zero value, value1 == value2
                     autoStatus = "COMPLETE";
                     driveMovements.move(MotorDirection.STOP);
