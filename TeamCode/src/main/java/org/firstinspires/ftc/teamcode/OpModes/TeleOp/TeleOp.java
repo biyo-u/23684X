@@ -37,10 +37,15 @@ public class TeleOp extends OpMode {
             robot.intake.wristDown();
         }
 
+        // INTAKE AND LIFT
+        // ---------------------------------
+        // INTAKE AND LIFT
+
         // Lift
         robot.lift.liftMove(gamepad2.left_stick_y);
 
         // Lift Tilt
+        // TODO: plug hardware back in, troubleshoot
         if (gamepad2.left_stick_x == 1){
             robot.lift.liftLeft();
         } else if (gamepad2.left_stick_x == -1){
@@ -67,18 +72,18 @@ public class TeleOp extends OpMode {
         // Back Claw
         if (gamepad2.left_bumper) {
             robot.intake.clawBackOpen();
-        } else if (gamepad2.left_trigger > 0.2){
+        } else if (gamepad2.right_bumper){
             robot.intake.clawBackClose();
         }
 
         // spin back claw
-        if (gamepad2.right_bumper){
+        if (gamepad2.dpad_left) {
             robot.intake.spinWristStraight();
-        } else if (gamepad2.right_trigger > 0.2){
+        } else if (gamepad2.dpad_right) {
             robot.intake.spinWristSideways();
         }
         // elbow motor
-        if (gamepad2.right_stick_y > 0)  {
+        if (gamepad2.right_stick_y > 0) {
             robot.intake.ElbowMotorUp();
         } else if (gamepad2.right_stick_y < 0) {
             robot.intake.ElbowMotorDown();
