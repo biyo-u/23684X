@@ -4,6 +4,8 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 import java.util.Locale;
 
@@ -37,7 +39,9 @@ public class Compass {
            imu.resetYaw();
        } else {
            odocomp.update();
+           Pose2D prevLocation = odocomp.getPosition();
            odocomp.resetPosAndIMU();
+           odocomp.setPosition(new Pose2D(DistanceUnit.INCH, prevLocation.getX(DistanceUnit.INCH), prevLocation.getY(DistanceUnit.INCH),AngleUnit.DEGREES,0));
        }
     }
 
