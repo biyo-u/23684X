@@ -52,7 +52,6 @@ public class Lift {
         liftMotorRight.setPower(speed);
     }
 
-    // FIXME: LIFT SERVO!!
     public void liftTiltBack(){
         liftServoTilt.setPosition(0.5);
     }
@@ -88,7 +87,6 @@ public class Lift {
         return liftMotorLeft;
     }
 
-    // FIXME: They don't work that well
     public void hang(double rightHang, double leftHang) {
         rightHangServo.setPosition(rightHang);
         leftHangServo.setPosition(leftHang);

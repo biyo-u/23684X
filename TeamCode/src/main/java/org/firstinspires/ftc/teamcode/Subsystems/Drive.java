@@ -54,7 +54,6 @@ public class Drive {
     }
 
     public void driveMecanumFieldCentric(double left_stick_y, double left_stick_x, double right_stick_x) {
-        // TODO: Make sure this is needed and doesn't just cause problems
         double y = -left_stick_y; // Remember, Y stick value is reversed
 
         // Gets robot heading (direction it's pointing)

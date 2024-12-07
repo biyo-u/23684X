@@ -10,7 +10,6 @@ public class Constants {
     public static final int liftRightForwardLimit = 8013;
     public static final int liftForwardLimit = 8013;
     public static final int liftBackwardLimit = -999999;
-    // TODO: Test elbow with DcMotor to see if encoder works, otherwise remove these variables
     public static final int shoulderForwardLimit = -999999;
     public static final int shoulderBackwardLimit = 9999999;
     public static final double odometryWeight = 0.2;
