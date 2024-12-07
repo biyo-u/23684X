@@ -35,6 +35,8 @@ public class Autonomosussy extends OpMode {
 	double zetaHeading = 0; // robot's current heading cast to a double
 	double zetaHeading2 = 0; // robot's target heading cast to a double
 
+	double correctionValue = 5.0;
+
 	@Override
 	public void init() {
 		// lines 35-45 initialise all imports so they are not rendered as "null", which when it happens creates the fatal NullPointerException error.
@@ -48,7 +50,7 @@ public class Autonomosussy extends OpMode {
 		this.robot = new Robot(hardwareMap);
 		this.driveMovements = new DriveMovements(robot);
 		this.liftMovements = new LiftMovements(robot);
-		this.migration = new Position(new Distance(0, DistanceUnit.INCH), new Distance(10, DistanceUnit.INCH), new Rotation(0, AngleUnit.DEGREES));
+		this.migration = new Position(new Distance(0, DistanceUnit.INCH), new Distance(24, DistanceUnit.INCH), new Rotation(0, AngleUnit.DEGREES));
 
 		GoalMet = false; // resets goal to false
 		telemetry.addData("Hardware Status", "initialised"); // prints on driver station that all hardware is initialised
@@ -70,17 +72,18 @@ public class Autonomosussy extends OpMode {
 		zetaX = zetaPosition.getX(DistanceUnit.INCH); // sets zetaPrime
 		zetaHeading = zetaPosition.getHeading(AngleUnit.DEGREES); // sets zetaPrime
 
-		if (Double.compare(odometry.getPosY(), migration.getX()) > 0.2) {
+		if ((Math.abs(odometry.getPosY()) - Math.abs(migration.getY())) < correctionValue) {
 			// if compare returns a negative value, X1 > X2
 			telemetry.addData("AUTO STATUS", "OVERSHOT");
 			driveMovements.move(MotorDirection.BACKWARD);
 
-		} else if (Double.compare(odometry.getPosY(), migration.getY()) < -0.2 && !GoalMet) {
+		} else if ((Math.abs(odometry.getPosY()) - Math.abs(migration.getY())) > correctionValue) {
 			// if compare returns a positive value, X1 < X2
 			telemetry.addData("AUTO STATUS", "INCOMPLETE");
 			driveMovements.move(MotorDirection.FORWARD);
 
-		} else if (Double.compare(odometry.getPosY(), migration.getY()) < 0.2 && Double.compare(odometry.getPosY(), migration.getY()) > -0.2) {
+//		} else if (Double.compare(odometry.getPosY(), migration.getY()) < correctionValue && Double.compare(odometry.getPosY(), migration.getY()) > -correctionValue) {
+		} else if ((Math.abs(odometry.getPosY()) - Math.abs(migration.getY())) < correctionValue && (Math.abs(odometry.getPosY()) - Math.abs(migration.getY())) > -correctionValue){
 			// if compare returns a zero value, X1 == X2
 			telemetry.addData("AUTO STATUS", "COMPLETE");
 			driveMovements.move(MotorDirection.STOP);
