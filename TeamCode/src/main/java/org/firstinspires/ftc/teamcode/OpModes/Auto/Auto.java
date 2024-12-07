@@ -45,13 +45,15 @@ public class Auto extends OpMode {
 	String autoStage = null; // robot's current action, String (text) value for telemetry
 	String autoStatus = null; // robot's current action status, String (text) value for telemetry
 
+	double correctionValue = 5.0;
+
 	@Override
 	public void init() {
 		// lines 48-54 initialise all information related to the odometry pods so when in use will properly function and not print out NullPointerExceptions.
 		this.odometry = hardwareMap.get(GoBildaPinpointDriver.class, "odometry");
 		this.odometry.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
 		this.odometry.setOffsets(-6.44, 6.8745);
-		this.odometry.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+		this.odometry.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
 		this.odometry.resetPosAndIMU();
 		this.odometry.setPosition(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));
 
@@ -79,6 +81,12 @@ public class Auto extends OpMode {
 
 	@Override
 	public void loop() {
+		odometry.update();
+
+		Pose2D zetaPosition = odometry.getPosition(); // creates Pose2D of the robot's position
+		zetaY = zetaPosition.getY(DistanceUnit.INCH); // gets zetaPrime's current Y
+		zetaX = zetaPosition.getX(DistanceUnit.INCH); // get zetaPrime's current X
+		zetaHeading = zetaPosition.getHeading(AngleUnit.DEGREES); // gets zetaPrime's current heading
 
 		switch (actionCounter) {
 
@@ -116,25 +124,22 @@ public class Auto extends OpMode {
 
 				autoStage = "STAGE: MOVE TO SUBMERSIBLE";
 
-				if (Double.compare(zetaY, zetaY2) > 0.2) {
+				if (zetaY - migration.getY() > correctionValue) {
 					// if compare returns a negative value, value1 > value2
 					autoStatus = "OVERSHOT";
 					driveMovements.move(MotorDirection.BACKWARD);
 
-				} else if (Double.compare(zetaY, zetaY2) < -0.2 && !GoalMet) {
+				} else if (zetaY - migration.getY() < -correctionValue && !GoalMet) {
 					// if compare returns a positive value, value1 < value2
 					autoStatus = "INCOMPLETE";
 					driveMovements.move(MotorDirection.FORWARD);
 
-				} else if (Double.compare(zetaY, zetaY2) < 0.2 && Double.compare(zetaY, zetaY2) > -0.2) {
+				} else {
 					// if compare returns a zero value, value1 == value2
 					autoStatus = "COMPLETE";
 					driveMovements.move(MotorDirection.STOP);
 					liftMovements.ClawOpen();
 					GoalMet = true;
-
-				} else {
-					autoStatus = "ERROR";
 				}
 				actionCounter = "PLACE PRELOADED SPECIMEN";
 				break;
@@ -180,17 +185,17 @@ public class Auto extends OpMode {
 				double zetaY2_GOAL = nextGoal.getY();
 
 				// TODO: Run Autonomosussy to ensure this code will not print out NullPointerExceptions (8)
-				if (Double.compare(zetaY2_2, zetaY2_GOAL) > 0.2) {
+				if (zetaY2_2 - zetaY2_GOAL > correctionValue) {
 					// if compare returns a negative value, value1 > value2
 					autoStatus = "OVERSHOT, BUT IT'S ALRIGHT";
 					driveMovements.move(MotorDirection.STOP);
 					liftMovements.LiftLower();
 					NextGoalMet = true;
-				} else if (Double.compare(zetaY2_2, zetaY2_GOAL) < -0.2 && NextGoalMet == false) {
+				} else if (zetaY2_2 - zetaY2_GOAL < -correctionValue && NextGoalMet == false) {
 					// if compare returns a positive value, value1 < value2
 					autoStatus = "INCOMPLETE";
 					driveMovements.move(MotorDirection.BACKWARD);
-				} else if (Double.compare(zetaY2_2, zetaY2_GOAL) < 0.2 && Double.compare(zetaY2_2, zetaY2_GOAL) > -0.2) {
+				} else {
 					// if compare returns a zero value, value1 == value2
 					autoStatus = "COMPLETE";
 					driveMovements.move(MotorDirection.STOP);
@@ -215,17 +220,16 @@ public class Auto extends OpMode {
 				zetaX2 = observationZone.getX();
 
 				// TODO: Run Autonomosussy to ensure this code will not print out NullPointerExceptions (8)
-				if (Double.compare(zetaY, zetaX2_3) > 0.2) {
+				if (zetaX - observationZone.getX() > correctionValue) {
 					// if compare returns a negative value, value1 > value2
 					autoStatus = "OVERSHOT, BUT IT'S ALRIGHT";
 					driveMovements.move(MotorDirection.STOP);
 					FinalGoalMet = true;
-				} else if (Double.compare(zetaY, zetaX2_3) < -0.2 && FinalGoalMet == false) {
+				} else if (zetaX - observationZone.getX() < -correctionValue && FinalGoalMet == false) {
 					// if compare returns a positive value, value1 < value2
 					autoStatus = "INCOMPLETE";
 					driveMovements.move(MotorDirection.STRAFE_RIGHT);
-				} else if (Double.compare(zetaY, zetaX2_3) < 0.2 && Double.compare(zetaY, zetaX2_3) > -0.2) {
-					// if compare returns a zero value, value1 == value2
+				} else {
 					autoStatus = "COMPLETE";
 					driveMovements.move(MotorDirection.STOP);
 					FinalGoalMet = true;
@@ -244,17 +248,17 @@ public class Auto extends OpMode {
 				break;
 
 			default: // IF actionCounter IS NOT DEFINED OR DEFINED TO A UNDEFINED STATE, PRINT ERROR
-				autoStage = "SWITCH ERROR";
+				autoStage = "ERROR";
 		}
 
 		// TODO: Ensure these telemetry lines will not print out NullPointerExceptions (10)
 		telemetry.addLine("ZETA PRIME LOCATIONS"); // heading title
 		telemetry.addData("TargetY (Forward, Backward) (INCHES)", migration.getY()); // robot's target Y position
-		telemetry.addData("CurrentY (Forward, Backward)", odometry.getPosY()); // robot's current Y position
+		telemetry.addData("CurrentY (Forward, Backward)", zetaY); // robot's current Y position
 		telemetry.addData("TargetX (Left, Right) (INCHES)", migration.getX()); // robot's target X position
-		telemetry.addData("CurrentX (Left, Right)", odometry.getPosX()); // robot's current X position
+		telemetry.addData("CurrentX (Left, Right)", zetaX); // robot's current X position
 		telemetry.addData("TargetHeading (Rotation) (DEGREES)", migration.getHeading()); // robot's target heading
-		telemetry.addData("CurrentHeading (Rotation)", odometry.getHeading()); // robot's current heading
+		telemetry.addData("CurrentHeading (Rotation)", zetaHeading); // robot's current heading
 
         telemetry.addLine("AUTO DIAGNOSTICS"); // heading title
         telemetry.addData("COUNT", counter); // counter

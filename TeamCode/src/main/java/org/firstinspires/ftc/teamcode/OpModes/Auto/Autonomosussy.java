@@ -23,7 +23,7 @@ public class Autonomosussy extends OpMode {
 	private DriveMovements driveMovements; // imports EagleMatrix movement class for drivetrain
 	private LiftMovements liftMovements; // imports EagleMatrix movement class for lift and intakes
 
-	public Position migration = new Position(new Distance(10, DistanceUnit.INCH), new Distance(0, DistanceUnit.INCH), new Rotation(180, AngleUnit.DEGREES)); // target position
+	public Position migration = new Position(new Distance(0, DistanceUnit.INCH), new Distance(24, DistanceUnit.INCH), new Rotation(180, AngleUnit.DEGREES)); // target position
 	int counter; // counter to ensure AUTO program is active and running loops
 	public boolean GoalMet = false; // checks to see if goal (zetaTranslation) has been reached
 
@@ -72,26 +72,23 @@ public class Autonomosussy extends OpMode {
 		zetaX = zetaPosition.getX(DistanceUnit.INCH); // sets zetaPrime
 		zetaHeading = zetaPosition.getHeading(AngleUnit.DEGREES); // sets zetaPrime
 
-		if ((Math.abs(odometry.getPosY()) - Math.abs(migration.getY())) < correctionValue) {
+		if (zetaY - migration.getY() > correctionValue) {
 			// if compare returns a negative value, X1 > X2
 			telemetry.addData("AUTO STATUS", "OVERSHOT");
 			driveMovements.move(MotorDirection.BACKWARD);
 
-		} else if ((Math.abs(odometry.getPosY()) - Math.abs(migration.getY())) > correctionValue) {
+		} else if (zetaY - migration.getY() < -correctionValue) {
 			// if compare returns a positive value, X1 < X2
 			telemetry.addData("AUTO STATUS", "INCOMPLETE");
 			driveMovements.move(MotorDirection.FORWARD);
 
 //		} else if (Double.compare(odometry.getPosY(), migration.getY()) < correctionValue && Double.compare(odometry.getPosY(), migration.getY()) > -correctionValue) {
-		} else if ((Math.abs(odometry.getPosY()) - Math.abs(migration.getY())) < correctionValue && (Math.abs(odometry.getPosY()) - Math.abs(migration.getY())) > -correctionValue){
+		} else { //if (odometry.getPosY() - migration.getY() < correctionValue && (Math.abs(odometry.getPosY()) - Math.abs(migration.getY())) > -correctionValue){
 			// if compare returns a zero value, X1 == X2
 			telemetry.addData("AUTO STATUS", "COMPLETE");
 			driveMovements.move(MotorDirection.STOP);
 			liftMovements.ClawOpen();
 			GoalMet = true;
-
-		} else {
-			telemetry.addData("AUTO STATUS", "ERROR");
 		}
 
 		telemetry.addLine("ZETA PRIME LOCATIONS");
