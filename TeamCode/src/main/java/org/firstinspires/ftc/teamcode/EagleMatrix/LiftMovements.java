@@ -118,4 +118,9 @@ public class LiftMovements {
     public void ShoulderDown() {
         robot.lift.shoulderMove(downward);
     }
+
+   public void ElbowUp(){robot.intake.ElbowMotorUp();}
+
+   public void e
 }
+
