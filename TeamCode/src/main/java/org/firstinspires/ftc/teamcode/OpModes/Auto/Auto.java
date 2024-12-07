@@ -26,8 +26,6 @@ public class Auto extends OpMode {
 	private GoBildaPinpointDriver odometry; // imports robot odometry class
 	private DriveMovements driveMovements; // imports EagleMatrix movement class for drivetrain
 	private LiftMovements liftMovements; // imports EagleMatrix movement class for lift and intakes
-
-	// TODO: Ensure these variables will not print out NullPointerExceptions (1)
 	public Position migration = new Position(new Distance(0, DistanceUnit.INCH), new Distance(20, DistanceUnit.INCH), new Rotation(180, AngleUnit.DEGREES)); // target position
 	int counter; // counter to ensure AUTO program is active and running loops
 	public boolean GoalMet = false; // checks to see if goal (zetaTranslation) has been reached
@@ -46,6 +44,8 @@ public class Auto extends OpMode {
 	String autoStatus = null; // robot's current action status, String (text) value for telemetry
 
 	double correctionValue = 5.0;
+
+	boolean tasksRun = false;
 
 	@Override
 	public void init() {
@@ -67,7 +67,6 @@ public class Auto extends OpMode {
 		this.robot.lift.getLiftMotorRight().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 		this.robot.lift.getLiftMotorLeft().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-		// TODO: Ensure these variables will not print out NullPointerExceptions (2)
 		GoalMet = false; // resets goals boolean to false
 		telemetry.addData("Hardware Status", "initialised"); // prints on driver station that all hardware is initialised
 
@@ -91,7 +90,6 @@ public class Auto extends OpMode {
 		switch (actionCounter) {
 
 			case "PREP TO SCORE": // PREPARES ROBOT LIFT AND INTAKE TO SCORING POSITION
-				// TODO: Ensure this code will not print out NullPointerExceptions or issues (3)
 
 				autoStage = "STAGE: PREP TO SCORE";
 
@@ -102,6 +100,8 @@ public class Auto extends OpMode {
 					public void run() {
 						liftMovements.ClawClose();
 						liftMovements.WristOut();
+						tasksRun = false;
+						actionCounter = "MOVE TO SUBMERSIBLE";
 					}
 				};
 
@@ -113,14 +113,14 @@ public class Auto extends OpMode {
 					}
 				};
 
+				if (!tasksRun) {
 				liftMovements.LiftScoreChamber();
 				timertwo.schedule(prepone,1000);
-
-				actionCounter = "MOVE TO SUBMERSIBLE";
+				tasksRun = true;
+				}
 				break;
 
 			case "MOVE TO SUBMERSIBLE": // ROBOT DRIVES TO SUBMERSIBLE POSITION
-				// TODO: Run Autonomosussy to ensure this code will not print out NullPointerExceptions (4)
 
 				autoStage = "STAGE: MOVE TO SUBMERSIBLE";
 
@@ -145,7 +145,6 @@ public class Auto extends OpMode {
 				break;
 
 			case "PLACE PRELOADED SPECIMEN": // ROBOT PLACES PRELOADED SPECIMEN ON HIGH CHAMBER
-				// TODO: Ensure this code will not print out NullPointerExceptions or issues (5)
 
 				autoStage = "STAGE: PLACE PRELOADED SPECIMEN";
 
@@ -166,16 +165,17 @@ public class Auto extends OpMode {
 					}
 				};
 
-				liftMovements.LiftPullDown();
-				timerone.schedule(waitone,3000);
+				if (!tasksRun) {
+					liftMovements.LiftPullDown();
+					timerone.schedule(waitone,3000);
+					tasksRun = true;
+				}
 
 				actionCounter = "LOWER LIFT";
 				break;
 
 
 			case "LOWER LIFT": // MOVES ROBOT BACK AND LOWERS DOWN THE LIFT
-				// TODO: Ensure this code will not print out NullPointerExceptions or issues (6)
-
 				autoStage = "STAGE: LOWER LIFT";
 
 				boolean NextGoalMet = false;
@@ -184,7 +184,6 @@ public class Auto extends OpMode {
 				double zetaY2_2 = odometry.getPosY();
 				double zetaY2_GOAL = nextGoal.getY();
 
-				// TODO: Run Autonomosussy to ensure this code will not print out NullPointerExceptions (8)
 				if (zetaY2_2 - zetaY2_GOAL > correctionValue) {
 					// if compare returns a negative value, value1 > value2
 					autoStatus = "OVERSHOT, BUT IT'S ALRIGHT";
@@ -209,7 +208,6 @@ public class Auto extends OpMode {
 				break;
 
 			case "MOVE TO OBSERVATION ZONE": // MOVES ROBOT TO OBSERVATION ZONE FROM SUBMERSIBLE POSITION
-				// TODO: Ensure these variables will not print out NullPointerExceptions (7)
 
 				autoStage = "STAGE: MOVE TO OBSERVATION ZONE";
 
@@ -219,7 +217,6 @@ public class Auto extends OpMode {
 				double zetaX2_3 = observationZone.getX();
 				zetaX2 = observationZone.getX();
 
-				// TODO: Run Autonomosussy to ensure this code will not print out NullPointerExceptions (8)
 				if (zetaX - observationZone.getX() > correctionValue) {
 					// if compare returns a negative value, value1 > value2
 					autoStatus = "OVERSHOT, BUT IT'S ALRIGHT";
@@ -241,7 +238,6 @@ public class Auto extends OpMode {
 				break;
 
 			case "EXEUNT": // ENDS THE SWITCH STATEMENT ONCE ALL CASES ARE COMPLETED
-				// TODO: Ensure a 'default' state is not required for this switch statement (9)
 
 				autoStage = "STAGE: EXEUNT";
 				autoStatus = "AUTONOMOUS PROCESS COMPLETE, PLEASE PREPARE FOR TELEOP.";
@@ -251,7 +247,6 @@ public class Auto extends OpMode {
 				autoStage = "ERROR";
 		}
 
-		// TODO: Ensure these telemetry lines will not print out NullPointerExceptions (10)
 		telemetry.addLine("ZETA PRIME LOCATIONS"); // heading title
 		telemetry.addData("TargetY (Forward, Backward) (INCHES)", migration.getY()); // robot's target Y position
 		telemetry.addData("CurrentY (Forward, Backward)", zetaY); // robot's current Y position
