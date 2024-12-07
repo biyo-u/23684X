@@ -53,7 +53,7 @@ public class Autonomosussy extends OpMode {
 		GoalMet = false; // resets goal to false
 		telemetry.addData("Hardware Status", "initialised"); // prints on driver station that all hardware is initialised
 
-		zetaY = odometry.getPosY(); // sets zetaPrime
+		zetaY = -odometry.getPosY(); // sets zetaPrime
 		zetaY2 = migration.getY();
 		zetaX = odometry.getPosX(); // sets zetaPrime
 		zetaX2 = migration.getX();
@@ -87,9 +87,9 @@ public class Autonomosussy extends OpMode {
 
 		telemetry.addLine("ZETA PRIME LOCATIONS");
 		telemetry.addData("TargetY (Forward, Backward) (INCHES)", migration.getY());
-		telemetry.addData("CurrentY (Forward, Backward)", odometry.getPosY());
+		telemetry.addData("CurrentY (Forward, Backward)", zetaY);
 		telemetry.addData("TargetX (Left, Right) (INCHES)", migration.getX());
-		telemetry.addData("CurrentX (Left, Right)", odometry.getPosX());
+		telemetry.addData("CurrentX (Left, Right)", zetaX);
 		telemetry.addData("TargetHeading (Rotation) (DEGREES)", migration.getHeading());
 		telemetry.addData("CurrentHeading (Rotation)", odometry.getHeading());
 
