@@ -69,7 +69,7 @@ public class Auto extends OpMode {
         GoalMet = false; // resets goals boolean to false
         telemetry.addData("Hardware Status", "initialised"); // prints on driver station that all hardware is initialised
 
-        zetaY = odometry.getPosY(); // gets zetaPrime's current Y
+        zetaY = -odometry.getPosY(); // gets zetaPrime's current Y
         zetaY2 = migration.getY(); // sets zetaPrime's target Y
         zetaX = odometry.getPosX(); // get zetaPrime's current X
         zetaX2 = migration.getX(); // sets zetaPrime's target X
@@ -262,7 +262,8 @@ public class Auto extends OpMode {
         telemetry.addData("AUTO STATUS", autoStatus); // status action is in
         telemetry.addLine("EagleMatrix 0.2.8."); // library version title
         counter++; // update counter for ever loop
-        telemetry.update(); // updates odometry every loop
+        odometry.update(); // updates odometry every loop
+        telemetry.update(); // updates telemetry every loop
     }
 }
 // har har line 269... bro i spent 3 whole days writing this, i will actually cry so hard if it doesn't work. i'd like to thank beyonce, pomodoro timers, and w3schools for making EagleMatrix 0.2.0 possible
