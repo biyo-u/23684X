@@ -11,21 +11,23 @@ public class Intake {
     private final Servo clawBack;
     private final Servo spinWrist;
     private final DcMotor elbowMotor;
+    private final Servo wristServoBack;
 
     /**
      * Constructor for the Intake subsystem.
      *
-     * @param clawFront  The Servo object representing the claw servo.
+     * @param clawFront The Servo object representing the claw servo.
      * @param wristServo The servo object representing the claw lift.
      * @param clawBack The spinning claw servo.
-     * @param spinWrist     The second wrist Servo.
+     * @param wristServoBack The rear wrist Servo.
      */
-    public Intake(Servo clawFront, Servo wristServo, Servo clawBack, Servo spinWrist, DcMotor elbowMotor) {
-        this.clawFront = clawFront;
-        this.wristServo = wristServo;
-        this.clawBack = clawBack;
-        this.spinWrist = spinWrist;
-        this.elbowMotor = elbowMotor;
+    public Intake(Servo clawFront, Servo wristServo, Servo clawBack, DcMotor elbowMotor, Servo spinWrist, Servo wristServoBack) {
+        this.clawFront = clawFront; // front claw
+        this.wristServo = wristServo; // front claw's wrist
+        this.clawBack = clawBack; // back claw
+        this.elbowMotor = elbowMotor; // elbow
+        this.spinWrist = spinWrist; // back claw spin
+        this.wristServoBack = wristServoBack; // back claw wrist
     }
 
     /**
@@ -72,20 +74,28 @@ public class Intake {
         spinWrist.setPosition(0);
     }
 
-    public void clawBackClose(){
-        clawBack.setPosition(0);
+    public void wristBackDown(){
+        wristServoBack.setPosition(1);
     }
 
-    public void clawBackOpen(){
+    public void wristBackUp(){
+        wristServoBack.setPosition(0);
+    }
+
+    public void clawBackClose(){
         clawBack.setPosition(1);
     }
 
+    public void clawBackOpen(){
+        clawBack.setPosition(0);
+    }
+
     public void ElbowMotorDown(){
-        elbowMotor.setPower(1);
+        elbowMotor.setPower(0.5);
     }
 
     public void ElbowMotorUp(){
-        elbowMotor.setPower(-1);
+        elbowMotor.setPower(-0.5);
     }
 
     public String getTelemetry() {
@@ -93,7 +103,6 @@ public class Intake {
                 Front Claw Servo: %f
                 Wrist Servo: %f
                 Spin Wrist Servo: %f
-                Claw Back Servo: %f
-                Elbow Motor: %d""", clawFront.getPosition(), wristServo.getPosition(), spinWrist.getPosition(), clawBack.getPosition(), elbowMotor.getCurrentPosition());
+                Claw Back Servo: %f""", clawFront.getPosition(), wristServo.getPosition(), spinWrist.getPosition(), clawBack.getPosition());
     }
 }

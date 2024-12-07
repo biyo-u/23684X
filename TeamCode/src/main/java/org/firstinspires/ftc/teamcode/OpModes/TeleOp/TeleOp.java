@@ -15,7 +15,7 @@ public class TeleOp extends OpMode {
 
     @Override
     public void loop() {
-        // Drive the robot with the gamepad
+        // Drive the robot with the game-pad
         robot.drive.driveMecanumFieldCentric(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
         // Reset IMU for Field Centric
@@ -30,26 +30,28 @@ public class TeleOp extends OpMode {
             robot.drive.setPower(0.6);
         }
 
-        // Wrist
-        if (gamepad2.y){
+        // Front Wrist
+        if (gamepad2.x){
             robot.intake.wristUp();
-        } else if (gamepad2.x) {
+        } else if (gamepad2.b) {
             robot.intake.wristDown();
         }
 
-        // INTAKE AND LIFT
-        // ---------------------------------
-        // INTAKE AND LIFT
+        // Back Wrist
+        if (gamepad2.y) {
+            robot.intake.wristBackUp();
+        } else if (gamepad2.a) {
+            robot.intake.wristBackDown();
+        }
 
         // Lift
         robot.lift.liftMove(gamepad2.left_stick_y);
 
         // Lift Tilt
-        // TODO: plug hardware back in, troubleshoot
         if (gamepad2.left_stick_x == 1){
-            robot.lift.liftLeft();
+            robot.lift.liftTiltBack();
         } else if (gamepad2.left_stick_x == -1){
-            robot.lift.liftRight();
+            robot.lift.liftTIltStraight();
         }
 
         // Shoulder
@@ -63,39 +65,39 @@ public class TeleOp extends OpMode {
         }
 
         //  Front Claw
-        if (gamepad2.a) {
+        if (gamepad2.right_trigger > 0) {
             robot.intake.clawOpen();
-        } else if (gamepad2.b) {
+        } else {
             robot.intake.clawClose();
         }
 
         // Back Claw
-        if (gamepad2.left_bumper) {
+        if (gamepad2.left_trigger > 0) {
             robot.intake.clawBackOpen();
-        } else if (gamepad2.right_bumper){
+        } else {
             robot.intake.clawBackClose();
         }
 
-        // spin back claw
+        // spin Back Claw
         if (gamepad2.dpad_left) {
             robot.intake.spinWristStraight();
         } else if (gamepad2.dpad_right) {
             robot.intake.spinWristSideways();
         }
-        // elbow motor
+        // Elbow Motor
         if (gamepad2.right_stick_y > 0) {
             robot.intake.ElbowMotorUp();
         } else if (gamepad2.right_stick_y < 0) {
             robot.intake.ElbowMotorDown();
         }
 
-//        robot.odometry.update();
+        robot.odometry.update();
 
-        // Telemetry  TODO: if anything else needs telemetry, add it
+        // Telemetry
         telemetry.addLine(robot.lift.getTelemetry());
         telemetry.addLine(robot.lift.getJointLiftPosition());
         telemetry.addLine(robot.intake.getTelemetry());
-//        telemetry.addLine(robot.odometry.getTelemetry());
+        telemetry.addLine(robot.odometry.getPosition().toString());
         telemetry.addLine(robot.compass.getTelemetry());
     }
 }

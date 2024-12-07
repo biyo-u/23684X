@@ -53,11 +53,11 @@ public class Lift {
     }
 
     // FIXME: LIFT SERVO!!
-    public void liftLeft(){
-        liftServoTilt.setPosition(0);
+    public void liftTiltBack(){
+        liftServoTilt.setPosition(0.5);
     }
 
-    public void liftRight(){
+    public void liftTIltStraight(){
         liftServoTilt.setPosition(1);
     }
 
