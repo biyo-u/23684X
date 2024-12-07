@@ -23,7 +23,7 @@ public class Autonomosussy extends OpMode {
     private DriveMovements driveMovements; // imports EagleMatrix movement class for drivetrain
     private LiftMovements liftMovements; // imports EagleMatrix movement class for lift and intakes
 
-    public Position migration = new Position(new Distance(10, DistanceUnit.INCH), new Distance(0, DistanceUnit.INCH), new Rotation(180, AngleUnit.DEGREES)); // target position
+    public Position migration = new Position(new Distance(0, DistanceUnit.INCH), new Distance(10, DistanceUnit.INCH), new Rotation(180, AngleUnit.DEGREES)); // target position
     int counter; // counter to ensure AUTO program is active and running loops
     public boolean GoalMet = false; // checks to see if goal (zetaTranslation) has been reached
 

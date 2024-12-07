@@ -134,7 +134,7 @@ public class Auto extends OpMode {
                     GoalMet = true;
 
                 } else {
-                    telemetry.addData("AUTO STATUS", "ERROR");
+                    autoStatus = "ERROR";
                 }
                 actionCounter = "PLACE PRELOADED SPECIMEN";
                 break;
