@@ -48,7 +48,7 @@ public class Autonomosussy extends OpMode {
 		this.robot = new Robot(hardwareMap);
 		this.driveMovements = new DriveMovements(robot);
 		this.liftMovements = new LiftMovements(robot);
-		this.migration = new Position(new Distance(10, DistanceUnit.INCH), new Distance(0, DistanceUnit.INCH), new Rotation(0, AngleUnit.DEGREES));
+		this.migration = new Position(new Distance(0, DistanceUnit.INCH), new Distance(10, DistanceUnit.INCH), new Rotation(0, AngleUnit.DEGREES));
 
 		GoalMet = false; // resets goal to false
 		telemetry.addData("Hardware Status", "initialised"); // prints on driver station that all hardware is initialised
@@ -96,6 +96,7 @@ public class Autonomosussy extends OpMode {
 		telemetry.addLine("AUTO STATUS");
 		telemetry.addData("COUNT", counter);
 		counter++;
+		odometry.update();
 		telemetry.update();
 	}
 }

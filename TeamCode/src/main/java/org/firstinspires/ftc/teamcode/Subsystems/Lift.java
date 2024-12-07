@@ -9,8 +9,7 @@ public class Lift {
     private final DcMotor liftMotorLeft;
     private final DcMotor liftMotorRight;
     private final DcMotor shoulderMotor;
-    private final Servo liftServoTiltRight;
-    private final Servo liftServoTiltLeft;
+    private final Servo liftServoTilt;
     private final Servo rightHangServo;
     private final Servo leftHangServo;
 
@@ -21,16 +20,14 @@ public class Lift {
      *
      * @param liftMotorLeft      The left lift motor.
      * @param liftMotorRight     The right lift motor.
-     * @param liftServoTiltRight The right tilt lift servo.
-     * @param liftServoTiltLeft  The left tilt lift servo.
+     * @param liftServoTilt The left tilt lift servo.
      * @param rightHangServo     The right hang servo.
      */
-    public Lift(DcMotor liftMotorLeft, DcMotor liftMotorRight, DcMotor shoulderMotor, Servo liftServoTiltRight, Servo liftServoTiltLeft, Servo rightHangServo, Servo leftHangServo) {
+    public Lift(DcMotor liftMotorLeft, DcMotor liftMotorRight, DcMotor shoulderMotor, Servo liftServoTilt, Servo rightHangServo, Servo leftHangServo) {
         this.liftMotorLeft = liftMotorLeft;
         this.liftMotorRight = liftMotorRight;
         this.shoulderMotor = shoulderMotor;
-        this.liftServoTiltLeft = liftServoTiltLeft;
-        this.liftServoTiltRight = liftServoTiltRight;
+        this.liftServoTilt = liftServoTilt;
         this.rightHangServo = rightHangServo;
         this.leftHangServo = leftHangServo;
         this.liftMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -73,13 +70,11 @@ public class Lift {
 //    }
 
     public void liftLeft(){
-        liftServoTiltLeft.setPosition(0);
-        liftServoTiltRight.setPosition(0);
+        liftServoTilt.setPosition(0);
     }
 
     public void liftRight(){
-        liftServoTiltLeft.setPosition(1);
-        liftServoTiltRight.setPosition(1);
+        liftServoTilt.setPosition(1);
     }
 
     /**

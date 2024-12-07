@@ -1,22 +1,31 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.Locale;
 
 public class Intake {
-    private final Servo clawServo;
+    private final Servo clawFront;
     private final Servo wristServo;
+    private final Servo clawBack;
+    private final Servo spinWrist;
+    private final DcMotor elbowMotor;
 
     /**
      * Constructor for the Intake subsystem.
      *
-     * @param clawServo   The Servo object representing the claw servo.
+     * @param clawFront  The Servo object representing the claw servo.
      * @param wristServo The servo object representing the claw lift.
+     * @param clawBack The spinning claw servo.
+     * @param spinWrist     The second wrist Servo.
      */
-    public Intake(Servo clawServo, Servo wristServo) {
-        this.clawServo = clawServo;
+    public Intake(Servo clawFront, Servo wristServo, Servo clawBack, Servo spinWrist, DcMotor elbowMotor) {
+        this.clawFront = clawFront;
         this.wristServo = wristServo;
+        this.clawBack = clawBack;
+        this.spinWrist = spinWrist;
+        this.elbowMotor = elbowMotor;
     }
 
     /**
@@ -25,7 +34,7 @@ public class Intake {
      * This method sets the position of the claw servo to 0, which corresponds to the open position.
      */
     public void clawOpen() {
-        clawServo.setPosition(0);
+        clawFront.setPosition(0);
     }
 
     /**
@@ -34,7 +43,7 @@ public class Intake {
      * This method sets the position of the claw servo to 1, which corresponds to the closed position.
      */
     public void clawClose() {
-        clawServo.setPosition(1);
+        clawFront.setPosition(1);
     }
 
     /**
@@ -59,6 +68,6 @@ public class Intake {
     public String getTelemetry() {
         return String.format(Locale.getDefault(), """
                 Claw Servo: %f
-                Wrist Servo: %f""", clawServo.getPosition(), wristServo.getPosition());
+                Wrist Servo: %f""", clawFront.getPosition(), wristServo.getPosition());
     }
 }
