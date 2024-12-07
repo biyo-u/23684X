@@ -68,9 +68,9 @@ public class Intake {
 
     public void spinWristStraight(){spinWrist.setPosition(0);}
 
-    public void ClawBackClose(){clawBack.setPosition(0);}
+    public void clawBackClose(){clawBack.setPosition(0);}
 
-    public void ClawBackOpen(){clawBack.setPosition(1);}
+    public void clawBackOpen(){clawBack.setPosition(1);}
 
     public void ElbowMotorDown(){elbowMotor.setPower(1);}
 
