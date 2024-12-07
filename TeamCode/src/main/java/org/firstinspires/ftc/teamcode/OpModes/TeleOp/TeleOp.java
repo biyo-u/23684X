@@ -57,11 +57,31 @@ public class TeleOp extends OpMode {
             robot.lift.hang(0.1, 0.7);
         }
 
-        // Claw
+        //  Front Claw
         if (gamepad2.a) {
             robot.intake.clawOpen();
         } else if (gamepad2.b) {
             robot.intake.clawClose();
+        }
+
+        // Back Claw
+        if (gamepad2.left_bumper) {
+            robot.intake.clawBackOpen();
+        } else if (gamepad2.left_trigger > 0.2){
+            robot.intake.clawBackClose();
+        }
+
+        // spin back claw
+        if (gamepad2.right_bumper){
+            robot.intake.spinWristStraight();
+        } else if (gamepad2.right_trigger > 0.2){
+            robot.intake.spinWristSideways();
+        }
+        // elbow motor
+        if (gamepad2.right_stick_y > 0)  {
+            robot.intake.ElbowMotorUp();
+        } else if (gamepad2.right_stick_y < 0) {
+            robot.intake.ElbowMotorDown();
         }
 
 //        robot.odometry.update();

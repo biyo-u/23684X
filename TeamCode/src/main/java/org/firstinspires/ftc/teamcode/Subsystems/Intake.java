@@ -64,6 +64,17 @@ public class Intake {
         wristServo.setPosition(0);
     }
 
+    public void spinWristSideways(){spinWrist.setPosition(1);}
+
+    public void spinWristStraight(){spinWrist.setPosition(0);}
+
+    public void clawBackClose(){clawBack.setPosition(0);}
+
+    public void clawBackOpen(){clawBack.setPosition(1);}
+
+    public void ElbowMotorDown(){elbowMotor.setPower(1);}
+
+    public void ElbowMotorUp(){elbowMotor.setPower(-1);}
 
     public String getTelemetry() {
         return String.format(Locale.getDefault(), """
