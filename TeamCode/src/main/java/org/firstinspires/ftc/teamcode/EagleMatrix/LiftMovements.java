@@ -118,4 +118,16 @@ public class LiftMovements {
     public void ShoulderDown() {
         robot.lift.shoulderMove(downward);
     }
+
+    public void ElbowUp(){robot.intake.ElbowMotorUp();}
+
+    public void ElbowDown(){robot.intake.ElbowMotorDown();}
+
+    public void SpinWristStraight(){robot.intake.spinWristStraight();}
+
+    public void SpinWristSideways(){robot.intake.spinWristSideways();}
+
+    public void BackClawOpen(){robot.intake.clawBackOpen();}
+
+    public void BackClawClose(){robot.intake.clawBackClose();}
 }
