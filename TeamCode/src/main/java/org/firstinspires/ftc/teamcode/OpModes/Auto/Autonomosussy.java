@@ -41,7 +41,7 @@ public class Autonomosussy extends OpMode {
 		this.odometry = hardwareMap.get(GoBildaPinpointDriver.class, "odometry");
 		this.odometry.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
 		this.odometry.setOffsets(-6.44, 6.8745);
-		this.odometry.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+		this.odometry.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
 		this.odometry.resetPosAndIMU();
 		this.odometry.setPosition(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));
 
