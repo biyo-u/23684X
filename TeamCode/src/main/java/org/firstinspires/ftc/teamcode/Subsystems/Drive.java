@@ -42,10 +42,10 @@ public class Drive {
 		// This ensures all the powers maintain the same ratio,
 		// but only if at least one is out of the range [-1, 1]
 		double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(right_stick_x), 1);
-		double frontLeftPower = (y + x + right_stick_x) / denominator;
-		double backLeftPower = (y - x + right_stick_x) / denominator;
-		double frontRightPower = (y - x - right_stick_x) / denominator;
-		double backRightPower = (y + x - right_stick_x) / denominator;
+		double frontLeftPower = ((y + x + right_stick_x) / denominator) * power;
+		double backLeftPower = ((y - x + right_stick_x) / denominator) * power;
+		double frontRightPower = ((y - x - right_stick_x) / denominator) * power;
+		double backRightPower = ((y + x - right_stick_x) / denominator) * power;
 
 		frontLeft.setPower(frontLeftPower);
 		frontRight.setPower(frontRightPower);

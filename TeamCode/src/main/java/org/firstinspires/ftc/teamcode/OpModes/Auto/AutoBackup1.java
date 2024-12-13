@@ -11,13 +11,13 @@ import org.firstinspires.ftc.teamcode.EagleMatrix.DriveMovements.MotorDirection;
 import org.firstinspires.ftc.teamcode.EagleMatrix.LiftMovements;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.Subsystems.GoBildaPinpointDriver;
-import org.firstinspires.ftc.teamcode.Utilities.Distance;
-import org.firstinspires.ftc.teamcode.Utilities.Position;
-import org.firstinspires.ftc.teamcode.Utilities.Rotation;
+import org.firstinspires.ftc.teamcode.Utilities.Old.Distance;
+import org.firstinspires.ftc.teamcode.Utilities.Old.Position;
+import org.firstinspires.ftc.teamcode.Utilities.Old.Rotation;
 
 
-@Autonomous(name = "AutoDiagnosticsX", group = Constants.GroupNames.Autonomous, preselectTeleOp = "TeleOp")
-public class Autonomosussy extends OpMode {
+@Autonomous(name = "AutoBackup", group = Constants.GroupNames.Autonomous, preselectTeleOp = "TeleOp")
+public class AutoBackup1 extends OpMode {
 	private Robot robot; // imports robot hardwareMap class
 	private GoBildaPinpointDriver odometry; // imports robot odometry class
 	private DriveMovements driveMovements; // imports EagleMatrix movement class for drivetrain
@@ -37,6 +37,8 @@ public class Autonomosussy extends OpMode {
 
 	double correctionValue = 5.0;
 
+	String autoStatus = null;
+
 	@Override
 	public void init() {
 		// lines 35-45 initialise all imports so they are not rendered as "null", which when it happens creates the fatal NullPointerException error.
@@ -50,7 +52,7 @@ public class Autonomosussy extends OpMode {
 		this.robot = new Robot(hardwareMap);
 		this.driveMovements = new DriveMovements(robot);
 		this.liftMovements = new LiftMovements(robot);
-		this.migration = new Position(new Distance(0, DistanceUnit.INCH), new Distance(24, DistanceUnit.INCH), new Rotation(0, AngleUnit.DEGREES));
+		this.migration = new Position(new Distance(0, DistanceUnit.INCH), new Distance(36, DistanceUnit.INCH), new Rotation(0, AngleUnit.DEGREES));
 
 		GoalMet = false; // resets goal to false
 		telemetry.addData("Hardware Status", "initialised"); // prints on driver station that all hardware is initialised
@@ -74,18 +76,18 @@ public class Autonomosussy extends OpMode {
 
 		if (zetaY - migration.getY() > correctionValue) {
 			// if compare returns a negative value, X1 > X2
-			telemetry.addData("AUTO STATUS", "OVERSHOT");
+			autoStatus = "OVERSHOT";
 			driveMovements.move(MotorDirection.BACKWARD);
 
 		} else if (zetaY - migration.getY() < -correctionValue) {
 			// if compare returns a positive value, X1 < X2
-			telemetry.addData("AUTO STATUS", "INCOMPLETE");
+			autoStatus = "INCOMPLETE";
 			driveMovements.move(MotorDirection.FORWARD);
 
 //		} else if (Double.compare(odometry.getPosY(), migration.getY()) < correctionValue && Double.compare(odometry.getPosY(), migration.getY()) > -correctionValue) {
 		} else { //if (odometry.getPosY() - migration.getY() < correctionValue && (Math.abs(odometry.getPosY()) - Math.abs(migration.getY())) > -correctionValue){
 			// if compare returns a zero value, X1 == X2
-			telemetry.addData("AUTO STATUS", "COMPLETE");
+			autoStatus = "COMPLETE";
 			driveMovements.move(MotorDirection.STOP);
 			liftMovements.ClawOpen();
 			GoalMet = true;
@@ -99,8 +101,9 @@ public class Autonomosussy extends OpMode {
 		telemetry.addData("TargetHeading (Rotation) (DEGREES)", migration.getHeading());
 		telemetry.addData("CurrentHeading (Rotation)", zetaHeading);
 
-		telemetry.addLine("AUTO STATUS");
+		telemetry.addLine("AUTO RUNNING INFO");
 		telemetry.addData("COUNT", counter);
+		telemetry.addData("AUTO STATUS", autoStatus);
 		counter++;
 		odometry.update();
 		telemetry.update();

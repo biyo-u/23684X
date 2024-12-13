@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.roadrunner.Pose2d;
 
 public class Constants {
-	public static final boolean developerMode = true;
+	public static final boolean developerMode = false;
 
 	// TODO: Find these values
 	public static final int liftLeftForwardLimit = 8333;

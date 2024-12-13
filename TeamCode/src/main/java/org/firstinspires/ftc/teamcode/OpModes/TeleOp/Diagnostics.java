@@ -33,7 +33,7 @@ public class Diagnostics extends OpMode {
 
 	@Override
 	public void init() {
-		if (Constants.developerMode) {
+		if (Constants.developerMode == false) {
 			requestOpModeStop();
 		}
 

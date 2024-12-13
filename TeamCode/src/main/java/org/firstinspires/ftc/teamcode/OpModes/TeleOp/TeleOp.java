@@ -1,8 +1,14 @@
 package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
+
+import java.util.Locale;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "TeleOp", group = Constants.GroupNames.TeleOp)
 public class TeleOp extends OpMode {
@@ -16,7 +22,7 @@ public class TeleOp extends OpMode {
 	@Override
 	public void loop() {
 		// Drive the robot with the game-pad
-		robot.drive.driveMecanumFieldCentric(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+		robot.drive.driveMecanumRobotCentric(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
 		// Reset IMU for Field Centric
 		if (gamepad1.left_bumper) {
@@ -24,10 +30,12 @@ public class TeleOp extends OpMode {
 		}
 
 		// Set speed mode
-		if (gamepad1.right_bumper) {
+		if (gamepad1.left_trigger > 0.8) {
 			robot.drive.setPower(1);
+		} else if (gamepad1.right_trigger > 0.8) {
+			robot.drive.setPower(0.75);
 		} else {
-			robot.drive.setPower(0.6);
+			robot.drive.setPower(0.5);
 		}
 
 		// Front Wrist
@@ -48,14 +56,14 @@ public class TeleOp extends OpMode {
 		robot.lift.liftMove(gamepad2.left_stick_y);
 
 		// Lift Tilt
-		if (gamepad2.left_stick_x == 1){
+		if (gamepad2.a){
 			robot.lift.liftTiltBack();
-		} else if (gamepad2.left_stick_x == -1){
+		} else if (gamepad2.y){
 			robot.lift.liftTIltStraight();
 		}
 
 		// Shoulder
-		robot.lift.shoulderMove(gamepad2.right_stick_x);
+		robot.lift.shoulderMove(gamepad2.right_stick_y * 0.8);
 
 		// Hang Hooks
 		if (gamepad2.dpad_up) {
@@ -66,17 +74,19 @@ public class TeleOp extends OpMode {
 
 		//  Front Claw
 		if (gamepad2.right_trigger > 0) {
-			robot.intake.clawOpen();
-		} else {
-			robot.intake.clawClose();
-		}
-
-		// Back Claw
-		if (gamepad2.left_trigger > 0) {
 			robot.intake.clawBackOpen();
+		} else if (gamepad2.left_trigger > 0) {
+			robot.intake.clawBackClose();
 		} else {
 			robot.intake.clawBackClose();
 		}
+
+//		// Back Claw
+//		if (gamepad2.left_trigger > 0) {
+//			robot.intake.clawBackOpen();
+//		} else {
+//			robot.intake.clawBackClose();
+//		}
 
 		// spin Back Claw
 		if (gamepad2.dpad_left) {
@@ -97,7 +107,9 @@ public class TeleOp extends OpMode {
 		telemetry.addLine(robot.lift.getTelemetry());
 		telemetry.addLine(robot.lift.getJointLiftPosition());
 		telemetry.addLine(robot.intake.getTelemetry());
-		telemetry.addLine(robot.odometry.getPosition().toString());
+		Pose2D position = robot.odometry.getPosition();
+		telemetry.addLine(String.format(Locale.getDefault(), "X: %f, Y: %f, Heading: %f", position.getX(DistanceUnit.INCH), position.getY(DistanceUnit.INCH), position.getHeading(AngleUnit.DEGREES)));
+		position = null;
 		telemetry.addLine(robot.compass.getTelemetry());
 	}
 }

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.OpModes.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -13,14 +14,15 @@ import org.firstinspires.ftc.teamcode.EagleMatrix.DriveMovements.MotorDirection;
 import org.firstinspires.ftc.teamcode.EagleMatrix.LiftMovements;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.Subsystems.GoBildaPinpointDriver;
-import org.firstinspires.ftc.teamcode.Utilities.Distance;
-import org.firstinspires.ftc.teamcode.Utilities.Position;
-import org.firstinspires.ftc.teamcode.Utilities.Rotation;
+import org.firstinspires.ftc.teamcode.Utilities.Old.Distance;
+import org.firstinspires.ftc.teamcode.Utilities.Old.Position;
+import org.firstinspires.ftc.teamcode.Utilities.Old.Rotation;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-@Autonomous(name = "AUTO: EagleMatrix 0.2.8", group = Constants.GroupNames.Autonomous, preselectTeleOp = "TeleOp")
+@Disabled
+@Autonomous(name = "DO NOT RUN", group = Constants.GroupNames.Autonomous, preselectTeleOp = "TeleOp")
 public class Auto extends OpMode {
 	private Robot robot; // imports robot hardwareMap class
 	private GoBildaPinpointDriver odometry; // imports robot odometry class

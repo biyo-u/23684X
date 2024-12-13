@@ -91,7 +91,7 @@ public class LiftMovements {
 		robot.intake.clawClose();
 	}
 
-	// WRIST MOVEMENTS
+	// WRIST MOVEMENTS TODO: Check Direction
 	/**
 	 * Retracts claw in.
 	 */
@@ -110,14 +110,16 @@ public class LiftMovements {
 	 * Raises arm up.
 	 */
 	public void ShoulderUp() {
-		robot.lift.shoulderMove(upward);
+		robot.lift.shoulderMove(-upward);
 	}
 	/**
 	 * Lowers arm down.
 	 */
 	public void ShoulderDown() {
-		robot.lift.shoulderMove(downward);
+		robot.lift.shoulderMove(-downward);
 	}
+
+	// TODO: Check Direction
 
 	public void ElbowUp(){
 		robot.intake.ElbowMotorUp();
