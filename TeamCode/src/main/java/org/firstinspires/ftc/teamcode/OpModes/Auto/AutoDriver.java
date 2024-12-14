@@ -22,14 +22,13 @@ public class AutoDriver {
 	}
 
 	public void run(){
-		// forEach isn't being used due to performance. It increases time by 6µ (six microseconds) per item compared to a for loop and a base 24-36 bytes instead of 20-34 bytes that a for loop takes.
 		ArrayList<Action> actions = autoActions.getActions();
 		ArrayList<String> ids = autoActions.getIds();
-		ArrayList<Integer> idsToRemove = new ArrayList<Integer>();
+		ArrayList<Integer> idsToRemove = new ArrayList<>();
 
 		for (int i = 0; i < actions.size(); i++) {
 			Action action = actions.get(i);
-			if (!ids.contains(action.getId())){
+			if (!ids.contains(action.getRequirement().getId())){
 				if (action.getTask().run()){
 					idsToRemove.add(i);
 				}
@@ -37,9 +36,9 @@ public class AutoDriver {
 		}
 
 		for (int i = 0; i < idsToRemove.size(); i++) {
-			Integer id = idsToRemove.get(i);
-			actions.remove(i);
-			ids.remove(i);
+			int id = idsToRemove.get(i);
+			actions.remove(id);
+			ids.remove(id);
 		}
 	}
 }
