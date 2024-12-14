@@ -11,7 +11,7 @@ public class AutoActions {
 
 	}
 
-	public AutoActions then(Action action){
+	public AutoActions add(Action action){
 		actions.add(action);
 		ids.add(action.getId());
 		requirements.add(action.getRequirement().getId());
@@ -20,10 +20,6 @@ public class AutoActions {
 
 	public ArrayList<Action> getActions(){
 		return actions;
-	}
-
-	public ArrayList<String> getRequirements(){
-		return requirements;
 	}
 
 	public ArrayList<String> getIds(){
